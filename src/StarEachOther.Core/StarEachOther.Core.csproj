@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>11</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Assets\CloseWindow.html" />
+	  <None Remove="Assets\Fail.html" />
+	  <None Remove="Assets\Login.html" />
+	  <None Remove="Assets\Secret.txt" />
+	  <None Remove="Assets\Success.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Assets\Login.html" />
+	  <EmbeddedResource Include="Assets\Fail.html" />
+	  <EmbeddedResource Include="Assets\CloseWindow.html" />
+	  <EmbeddedResource Include="Assets\Secret.txt" />
+	  <EmbeddedResource Include="Assets\Success.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EmbedIO" Version="3.5.2" />
+		<PackageReference Include="Octokit" Version="13.0.1" />
+		<PackageReference Include="SharpDevLib" Version="2.0.0" />
+	</ItemGroup>
+
+</Project>

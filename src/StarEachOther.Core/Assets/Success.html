@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>
+        <svg viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M666.272 472.288l-175.616 192a31.904 31.904 0 0 1-23.616 10.4h-0.192a32 32 0 0 1-23.68-10.688l-85.728-96a32 32 0 1 1 47.744-42.624l62.144 69.6 151.712-165.888a32 32 0 1 1 47.232 43.2m-154.24-344.32C300.224 128 128 300.32 128 512c0 211.776 172.224 384 384 384 211.68 0 384-172.224 384-384 0-211.68-172.32-384-384-384" fill="#135618"></path>
+        </svg>
+        成功
+    </h2>
+    <!--<p>您现在可以关闭该窗口</p>-->
+    <p id='time'>5</p>
+    <p>秒后自动关闭</p>
+</div>
+
+<style>
+    .container {
+        text-align: center;
+        padding-top: 50px;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    h2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    p {
+        display: inline-block;
+    }
+</style>
+
+<script>
+    var time = 5;
+    setInterval(function () {
+        time--;
+        if (time <= 0) time = 0;
+        document.getElementById('time').innerText = time;
+    }, 1000);
+    setTimeout(function () {
+        var url = location.origin + '/CloseWindow';
+        window.open(url, '_self');
+    }, 5000);
+</script>
+

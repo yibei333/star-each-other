@@ -1,0 +1,13 @@
+
+<p>跳转中...</p>
+
+<style>
+    h1 {
+        display: none;
+    }
+</style>
+
+<script>
+    var url = decodeURIComponent(location.href.substring(location.href.indexOf('redirect_url') + 'redicret_url'.length + 1));
+    location.href = url;
+</script>

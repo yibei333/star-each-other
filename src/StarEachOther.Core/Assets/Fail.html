@@ -1,0 +1,45 @@
+<div class="container">
+    <h2>
+        <svg viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M512.697 75.445c-247.539 0-448.208 200.669-448.208 448.208 0 247.54 200.669 448.208 448.208 448.208 247.54 0 448.208-200.668 448.208-448.208 0-247.539-200.668-448.208-448.208-448.208zM690.686 657.208c12.265 12.274 12.265 32.171 0 44.427-12.283 12.274-32.171 12.274-44.453 0l-133.316-133.316-133.327 133.316c-12.274 12.274-32.161 12.274-44.445 0-12.265-12.256-12.265-32.153 0-44.427l133.335-133.353-133.335-133.317c-12.265-12.256-12.265-32.171 0-44.444 12.283-12.256 32.171-12.256 44.445 0l133.327 133.335 133.316-133.335c12.283-12.256 32.171-12.256 44.453 0 12.265 12.274 12.265 32.189 0 44.444l-133.335 133.317 133.335 133.353z" fill="#d81e06"></path>
+        </svg>
+        失败
+    </h2>
+    <!--<p>您现在可以关闭该窗口</p>-->
+    <p id='time'>5</p>
+    <p>秒后自动关闭</p>
+</div>
+
+<style>
+    .container {
+        text-align: center;
+        padding-top: 50px;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    h2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    p {
+        display: inline-block;
+    }
+</style>
+
+<script>
+    var time = 5;
+    setInterval(function () {
+        time--;
+        if (time <= 0) time = 0;
+        document.getElementById('time').innerText = time;
+    }, 1000);
+    setTimeout(function () {
+        var url = location.origin + '/CloseWindow';
+        window.open(url, '_self');
+    }, 5000);
+</script>

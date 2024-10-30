@@ -5,9 +5,18 @@
              xmlns:local="clr-namespace:StarEachOther.Framework"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="StarEachOther.Framework.MainView"
-			 x:DataType="local:MainViewModel">
+			 x:DataType="local:MainViewModel"
+			 HorizontalAlignment="Center"
+			 VerticalAlignment="Center">
 	<Design.DataContext>
 		<local:MainViewModel/>
 	</Design.DataContext>
-	<ContentControl Content="{Binding View}"/>
+
+	<StackPanel>
+		<StackPanel IsVisible="{Binding !Success}">
+			<TextBlock Text="{Binding Message}"/>
+			<Button IsVisible="{Binding ShowRetry}" Command="{Binding InitializeCommand}" HorizontalAlignment="Center">重试</Button>
+		</StackPanel>
+		<ContentControl Content="{Binding View}" IsVisible="{Binding Success}"/>
+	</StackPanel>
 </UserControl>

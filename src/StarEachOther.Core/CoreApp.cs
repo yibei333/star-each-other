@@ -9,22 +9,17 @@ namespace StarEachOther.Core;
 
 public class CoreApp
 {
-    readonly int _port = 1088;
-    string Url => $"http://localhost:{_port}";
-    public const string SigninCallbackEndpoint = "/SignInCallback";
-    public const string SigninEndpoint = "/SignIn";
-    public const string CloseWindowEndpoint = "/CloseWindow";
-    public const string GithubOAuthAppName = "StarEachOther";
+
 
     public CoreApp(Func<Exception, Task> onException, Func<AuthorizationException, Task> onLogin, Action<bool> loginResult)
     {
-        ApiWrapper = new GithubApiWrapper(new GitHubClient(new ProductHeaderValue(GithubOAuthAppName)), Url, loginResult);
+        ApiWrapper = new GithubApiWrapper(new GitHubClient(new ProductHeaderValue(Config.GithubOAuthAppName)), Config.Url, loginResult);
 
-        WebServer = new WebServer(o => o.WithUrlPrefix(Url).WithMode(HttpListenerMode.EmbedIO));
+        WebServer = new WebServer(o => o.WithUrlPrefix(Config.Url).WithMode(HttpListenerMode.EmbedIO));
         WebServer.WithLocalSessionManager();
-        WebServer.WithAction(CloseWindowEndpoint, HttpVerbs.Get, ApiWrapper.CloseWindow);
-        WebServer.WithAction(SigninEndpoint, HttpVerbs.Get, ApiWrapper.SignIn);
-        WebServer.WithAction(SigninCallbackEndpoint, HttpVerbs.Get, ApiWrapper.SignInCallback);
+        WebServer.WithAction(Config.CloseWindowEndpoint, HttpVerbs.Get, ApiWrapper.CloseWindow);
+        WebServer.WithAction(Config.SigninEndpoint, HttpVerbs.Get, ApiWrapper.SignIn);
+        WebServer.WithAction(Config.SigninCallbackEndpoint, HttpVerbs.Get, ApiWrapper.SignInCallback);
         WebServer.WithModule(new ActionModule("/", HttpVerbs.Any, ctx => ctx.SendDataAsync(new { Message = "未知错误" })));
         OnException = onException;
         OnLogin = onLogin;
@@ -73,7 +68,7 @@ public class CoreApp
         {
             await Task.Yield();
             var authUri = ApiWrapper.GetAuthUrl();
-            var fullUrl = $"{Url}{SigninEndpoint}?redirect_url={authUri}";
+            var fullUrl = $"{Config.Url}{Config.SigninEndpoint}?redirect_url={authUri}";
             callback(new Uri(fullUrl));
         });
     }

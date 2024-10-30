@@ -9,9 +9,9 @@ namespace StarEachOther.Core;
 public class GithubApiWrapper
 {
     //https://github.com/settings/developers -> OAuth Apps
-    readonly string _clientId = "your client id";
-    readonly string _clientSecret = "your client secret";
-    string SigninCallbackEndpointPath => Url.CombinePath(CoreApp.SigninCallbackEndpoint);
+    string _clientId = "your client id";
+    string _clientSecret = "your client secret";
+    string SigninCallbackEndpointPath => Url.CombinePath(Config.SigninCallbackEndpoint);
     string? _githubToken;
     string? _csrf;
 
@@ -27,6 +27,13 @@ public class GithubApiWrapper
     public string Url { get; }
 
     public Action<bool> LoginResult { get; }
+
+    public async Task Initialize()
+    {
+        var key = await ResourceExtension.GetConfig();
+        _clientId = key.Item1;
+        _clientSecret = key.Item2;
+    }
 
     public Uri GetAuthUrl()
     {

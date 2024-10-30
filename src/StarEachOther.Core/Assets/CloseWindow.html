@@ -1,4 +1,17 @@
+<p id="text" class="hide">如果自动关闭无效,请手动关闭窗口</p>
+
+<style>
+    h1 {
+        display: none;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
 <script>
     window.close();
+    document.getElementById('text').classList.remove('hide');
 </script>
 

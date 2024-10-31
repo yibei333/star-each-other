@@ -1,4 +1,5 @@
 ﻿using Octokit;
+using Octokit.Internal;
 using SharpDevLib;
 using SharpDevLib.Cryptography;
 using System;
@@ -115,7 +116,13 @@ public class GithubClientWrapper
 
     async Task<string> GetSecret()
     {
-        using var client = new HttpClient();
+        var handler = new HttpClientHandler
+        {
+            UseProxy = true,
+            DefaultProxyCredentials = CredentialCache.DefaultCredentials
+        };
+
+        using var client = new HttpClient(handler);
         return await client.GetStringAsync(Config.GithubSecretUrl);
     }
 }

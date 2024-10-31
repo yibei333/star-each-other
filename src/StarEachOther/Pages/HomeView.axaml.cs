@@ -17,7 +17,6 @@ public partial class HomeView : UserControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-
         (DataContext as HomeViewModel)?.GetRepositories();
     }
 }

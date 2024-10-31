@@ -5,9 +5,8 @@
         </svg>
         成功
     </h2>
-    <!--<p>您现在可以关闭该窗口</p>-->
     <p id='time'>5</p>
-    <p>秒后自动关闭</p>
+    <p id="text">秒后自动关闭</p>
 </div>
 
 <style>
@@ -33,14 +32,15 @@
 
 <script>
     var time = 5;
-    setInterval(function () {
+    var timer = setInterval(function () {
         time--;
-        if (time <= 0) time = 0;
-        document.getElementById('time').innerText = time;
+        if (time < 0) {
+            window.close();
+            clearInterval(timer);
+            document.getElementById('time').style.display = 'none';
+            document.getElementById('text').innerText = '自动关闭失败,请手动关闭窗口';
+        } else {
+            document.getElementById('time').innerText = time;
+        }
     }, 1000);
-    setTimeout(function () {
-        var url = location.origin + '/CloseWindow';
-        window.open(url, '_self');
-    }, 5000);
 </script>
-

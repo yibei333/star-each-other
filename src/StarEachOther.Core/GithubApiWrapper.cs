@@ -48,16 +48,6 @@ public class GithubApiWrapper
         return oauthLoginUrl;
     }
 
-    public async Task SignIn(IHttpContext context)
-    {
-        await context.SendStandardHtmlAsync(200, writer => writer.Write(ResourceExtension.GetText("Login.html")));
-    }
-
-    public async Task CloseWindow(IHttpContext context)
-    {
-        await context.SendStandardHtmlAsync(200, writer => writer.Write(ResourceExtension.GetText("CloseWindow.html")));
-    }
-
     public async Task SignInCallback(IHttpContext context)
     {
         var state = context.Request.QueryString["state"];

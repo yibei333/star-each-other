@@ -67,7 +67,7 @@ public partial class MainViewModel : ViewModelBase
         {
             Message = "初始化...";
             ShowRetry = false;
-            await App.CurrentInstance.CoreApp.ApiWrapper.Initialize();
+            await App.CurrentInstance.Client.Initialize();
             Success = true;
         }
         catch (Exception ex)

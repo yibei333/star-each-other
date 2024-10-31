@@ -12,5 +12,5 @@
 	<Design.DataContext>
 		<local:HomeViewModel/>
 	</Design.DataContext>
-	<TextBlock Text="{Binding Greeting}"></TextBlock>
+	<TextBlock Text="{Binding Message}" TextWrapping="Wrap"></TextBlock>
 </UserControl>

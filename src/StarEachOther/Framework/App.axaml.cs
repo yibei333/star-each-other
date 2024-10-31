@@ -16,7 +16,8 @@ namespace StarEachOther.Framework;
 public partial class App : Application
 {
     public static App CurrentInstance { get; private set; } = null!;
-    public CoreApp CoreApp { get; private set; } = null!;
+    public LocalServerWrapper Server { get; private set; } = null!;
+    public GithubClientWrapper Client { get; private set; } = null!;
     public MainView MainView { get; private set; } = null!;
     public ILauncher Launcher => TopLevel.GetTopLevel(MainView)!.Launcher;
 
@@ -24,8 +25,14 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
 
-        CoreApp = new CoreApp(RequestError, RequireSignin, SigninResult);
-        CoreApp.Start();
+        Client = new GithubClientWrapper();
+        Client.RequestException += OnRequestException;
+        Client.UnAuthenticated += OnUnAuthenticated;
+
+        Server = new LocalServerWrapper(Client);
+        Server.SigninCallback += OnSigninCallback;
+        Server.Start();
+
         CurrentInstance = this;
     }
 
@@ -40,33 +47,34 @@ public partial class App : Application
             {
                 Content = MainView
             };
-            desktop.Exit += (s, e) => CoreApp?.Stop();
+            desktop.Exit += (s, e) => Server?.Stop();
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             singleViewPlatform.MainView = MainView;
-            singleViewPlatform.MainView.Unloaded += (s, e) => CoreApp?.Stop();
+            singleViewPlatform.MainView.Unloaded += (s, e) => Server?.Stop();
         }
 
         base.OnFrameworkInitializationCompleted();
     }
 
-    async Task RequestError(Exception e)
+    async Task OnRequestException(Exception e)
     {
         var box = MessageBoxManager.GetMessageBoxStandard("错误", e.Message, ButtonEnum.Ok);
         await box.ShowAsync();
         MainView.Refresh();
     }
 
-    async Task RequireSignin(Octokit.AuthorizationException e)
+    async Task OnUnAuthenticated(Octokit.AuthorizationException e)
     {
-        await Task.Yield();
         MainView.Nav<SigninView>();
+        await Task.CompletedTask;
     }
 
-    void SigninResult(bool success)
+    async Task OnSigninCallback(bool success)
     {
         if (success) MainView.Nav<HomeView>();
         else MainView.Refresh();
+        await Task.CompletedTask;
     }
 }

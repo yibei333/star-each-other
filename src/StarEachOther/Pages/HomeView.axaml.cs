@@ -23,19 +23,15 @@ public partial class HomeView : UserControl
 
 public partial class HomeViewModel : ViewModelBase
 {
-    public void GetRepositories()
+    public async void GetRepositories()
     {
-        if (string.IsNullOrWhiteSpace(App.CurrentInstance.CoreApp.ApiWrapper.GetToken()))
-        {
-            App.CurrentInstance.MainView.Nav<SigninView>();
-            return;
-        }
-        App.CurrentInstance.CoreApp.GetRepositories(repositories =>
-        {
-            Greeting = string.Join(";", repositories.Select(x => x.Name));
-        });
+        await App.CurrentInstance.Client.Request(async client =>
+         {
+             var repositories = await client.Repository.GetAllForCurrent();
+             Message = string.Join(";", repositories.Select(x => x.Name));
+         });
     }
 
     [ObservableProperty]
-    private string _greeting = "Home";
+    private string message = "Home";
 }

@@ -14,7 +14,7 @@
 
 	<StackPanel>
 		<StackPanel IsVisible="{Binding !Success}">
-			<TextBlock Text="{Binding Message}"/>
+			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Message}"/>
 			<Button IsVisible="{Binding ShowRetry}" Command="{Binding InitializeCommand}" HorizontalAlignment="Center">重试</Button>
 		</StackPanel>
 		<ContentControl Content="{Binding View}" IsVisible="{Binding Success}"/>

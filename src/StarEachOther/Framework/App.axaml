@@ -1,9 +1,14 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
 			 xmlns:semi="https://irihi.tech/semi"
              x:Class="StarEachOther.Framework.App"
              RequestedThemeVariant="Default">
 	<Application.Styles>
 		<semi:SemiTheme Locale="zh-CN" />
 	</Application.Styles>
+	<Application.Resources>
+		<sys:Double x:Key="ButtonDefaultFontSize">16</sys:Double>
+		<FontWeight x:Key="ButtonDefaultFontWeight">Medium</FontWeight>
+	</Application.Resources>
 </Application>

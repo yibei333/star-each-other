@@ -1,14 +1,10 @@
 ﻿using Octokit;
-using Octokit.Internal;
 using SharpDevLib;
 using SharpDevLib.Cryptography;
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.NetworkInformation;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StarEachOther.Core;

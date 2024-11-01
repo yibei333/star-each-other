@@ -8,4 +8,5 @@ public class Config
     public const string GithubOAuthAppName = "StarEachOther";
     public const string GithubSecretUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/secret.txt";
     public const string SupportAutherUrl = "https://github.com/yibei333/star-each-other";
+    public const string RepoListUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/list.txt";
 }

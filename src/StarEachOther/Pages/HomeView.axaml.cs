@@ -3,51 +3,93 @@ using Avalonia.Data.Converters;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Octokit;
+using SharpDevLib;
 using StarEachOther.Core;
 using StarEachOther.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace StarEachOther.Pages;
 
 public partial class HomeView : UserControl
 {
+    public static List<string> AllRepoList { get; private set; } = [];
+    public static List<StarredRepositoryModel> StarredRepoList { get; private set; } = [];
+    public static List<Repository> MyRepoList { get; private set; } = [];
+
     public HomeView()
     {
         InitializeComponent();
         DataContext = new HomeViewModel();
     }
+
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        base.OnLoaded(e);
+        _ = (DataContext as HomeViewModel)!.Refresh();
+    }
+
+    public static async Task<bool> SetRepo()
+    {
+        var result = false;
+
+        //all registered repo
+        var text = await HttpExtension.GetText(Config.RepoListUrl);
+        if (!text.Success)
+        {
+            await App.Alert("错误", text.Data);
+            return result;
+        }
+        AllRepoList = text.Data.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Distinct().ToList();
+
+        //starred repo
+        result = await App.CurrentInstance.Client.Request(async client =>
+        {
+            var user = await client.User.Current();
+            var model = await client.Connection.Get<List<StarredRepositoryModel>>(new Uri($"{GitHubClient.GitHubApiUrl}users/{user.Login}/starred"), TimeSpan.FromSeconds(60));
+            if (!model.HttpResponse.IsSuccessStatusCode()) throw new Exception("获取数据失败");
+            StarredRepoList = model.Body;
+        });
+        if (!result) return result;
+
+        //my repo
+        result = await App.CurrentInstance.Client.Request(async client =>
+        {
+            MyRepoList = (await client.Repository.GetAllForCurrent(new RepositoryRequest { Type = RepositoryType.Public })).ToList();
+        });
+        return result;
+    }
 }
 
 public partial class HomeViewModel : ViewModelBase
 {
-    readonly Dictionary<int, object> _cache = [];
-
-    public HomeViewModel()
-    {
-        _cache.Add(1, new WaitForStarView());
-        _cache.Add(2, new StarredView());
-        _cache.Add(3, new MyRepositoryView());
-        Switch(1);
-        SupportAutherUrl = Config.SupportAutherUrl;
-    }
-
     [ObservableProperty]
     object? view;
 
     [ObservableProperty]
-    int index = 0;
+    int index = 1;
 
     [ObservableProperty]
-    string supportAutherUrl;
+    string supportAutherUrl = Config.SupportAutherUrl;
 
     void Switch(int index)
     {
         Index = index;
-        if (_cache.TryGetValue(index, out object? value))
+        if (index == 1)
         {
-            View = value;
+            View = new WaitForStarView();
+        }
+        else if (index == 2)
+        {
+            View = new StarredView();
+        }
+        else
+        {
+            View = new MyRepositoryView();
         }
     }
 
@@ -61,14 +103,12 @@ public partial class HomeViewModel : ViewModelBase
     public void SwitchMyRepositoryView() => Switch(3);
 
     [RelayCommand]
-    public void Refresh()
+    public async Task Refresh()
     {
-        var type = View?.GetType();
-        if (type is null) return;
-        var instance = Activator.CreateInstance(type);
-        if (instance is null) return;
-        _cache[Index] = instance;
-        View = instance;
+        if (await HomeView.SetRepo())
+        {
+            Switch(Index);
+        }
     }
 }
 
@@ -84,4 +124,9 @@ public class ButtonActiveConverter : IValueConverter
     {
         throw new NotImplementedException();
     }
+}
+
+public class StarredRepositoryModel
+{
+    public string? Url { get; set; }
 }

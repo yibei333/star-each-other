@@ -60,9 +60,8 @@ public partial class App : Application
 
     async Task OnRequestException(Exception e)
     {
-        var box = MessageBoxManager.GetMessageBoxStandard("错误", e.Message, ButtonEnum.Ok);
-        await box.ShowAsync();
-        MainView.Refresh();
+        await Alert("错误", e.Message);
+        //MainView.Refresh();
     }
 
     async Task OnUnAuthenticated(Octokit.AuthorizationException e)
@@ -76,5 +75,11 @@ public partial class App : Application
         if (success) MainView.Nav<HomeView>();
         else MainView.Refresh();
         await Task.CompletedTask;
+    }
+
+    public static async Task Alert(string title, string text)
+    {
+        var box = MessageBoxManager.GetMessageBoxStandard(title, text, ButtonEnum.Ok);
+        await box.ShowAsync();
     }
 }

@@ -1,8 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
-namespace StarEachOther;
+namespace StarEachOther.Pages;
 
 public partial class StarredView : UserControl
 {

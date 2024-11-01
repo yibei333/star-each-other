@@ -2,8 +2,6 @@
 using SharpDevLib;
 using SharpDevLib.Cryptography;
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
@@ -28,16 +26,17 @@ public class GithubClientWrapper
 
     public bool IsAuthenticated { get; private set; }
 
-    public async Task Request(Action<GitHubClient> request)
+    public async Task<bool> Request(Func<GitHubClient, Task> request)
     {
         try
         {
             if (!IsAuthenticated)
             {
                 if (UnAuthenticated is not null) await UnAuthenticated.Invoke(new AuthorizationException());
-                return;
+                return false;
             }
-            request(_client);
+            await request(_client);
+            return true;
         }
         catch (AuthorizationException ex)
         {
@@ -48,6 +47,7 @@ public class GithubClientWrapper
         {
             if (RequestException is not null) await RequestException.Invoke(ex);
         }
+        return false;
     }
 
     public async Task Initialize()
@@ -55,7 +55,9 @@ public class GithubClientWrapper
         try
         {
             var secret = ResourceExtension.GetText("Secret.txt").Trim();
-            var remote = (await GetSecret()).Trim();
+            var remoteRepsonse = await HttpExtension.GetText(Config.GithubSecretUrl);
+            if (!remoteRepsonse.Success) throw new Exception(remoteRepsonse.Data);
+            var remote = remoteRepsonse.Data.Trim();
 
             var key = secret.Utf8Decode();
             var iv = "0000000000000000".Utf8Decode();
@@ -109,25 +111,5 @@ public class GithubClientWrapper
         }
         catch { }
         return false;
-    }
-
-    async Task<string> GetSecret()
-    {
-        try
-        {
-            using var client = new HttpClient();
-            return await client.GetStringAsync(Config.GithubSecretUrl);
-        }
-        catch
-        {
-            var handler = new HttpClientHandler
-            {
-                UseProxy = true,
-                Proxy = new WebProxy("http://localhost:7890")
-            };
-
-            using var client = new HttpClient(handler);
-            return await client.GetStringAsync(Config.GithubSecretUrl);
-        }
     }
 }

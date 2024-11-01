@@ -1,13 +1,19 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+using StarEachOther.Framework;
+using System.Collections.ObjectModel;
 
-namespace StarEachOther;
+namespace StarEachOther.Pages;
 
 public partial class WaitForStarView : UserControl
 {
     public WaitForStarView()
     {
         InitializeComponent();
+        DataContext = new WaitForStarViewModel();
     }
+}
+
+public class WaitForStarViewModel : ViewModelBase
+{
+    public ObservableCollection<string> Repo { get; } = new ObservableCollection<string>(HomeView.AllRepoList);
 }

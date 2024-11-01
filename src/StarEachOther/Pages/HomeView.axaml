@@ -19,7 +19,7 @@
 			<Button HorizontalAlignment="Left" Command="{Binding RefreshCommand}">
 				<StackPanel Orientation="Horizontal">
 					<materialIcons:MaterialIcon Kind="Refresh" />
-					<TextBlock>刷新页面</TextBlock>
+					<TextBlock>刷新</TextBlock>
 				</StackPanel>
 			</Button>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

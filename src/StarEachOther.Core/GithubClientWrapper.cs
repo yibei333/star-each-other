@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -116,13 +117,21 @@ public class GithubClientWrapper
 
     async Task<string> GetSecret()
     {
-        var handler = new HttpClientHandler
+        try
         {
-            UseProxy = true,
-            DefaultProxyCredentials = CredentialCache.DefaultCredentials
-        };
+            using var client = new HttpClient();
+            return await client.GetStringAsync(Config.GithubSecretUrl);
+        }
+        catch
+        {
+            var handler = new HttpClientHandler
+            {
+                UseProxy = true,
+                Proxy = new WebProxy("http://localhost:7890")
+            };
 
-        using var client = new HttpClient(handler);
-        return await client.GetStringAsync(Config.GithubSecretUrl);
+            using var client = new HttpClient(handler);
+            return await client.GetStringAsync(Config.GithubSecretUrl);
+        }
     }
 }

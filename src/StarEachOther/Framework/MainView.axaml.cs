@@ -22,10 +22,7 @@ public partial class MainView : UserControl
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
-        ViewModel.Initialize().ContinueWith((s) =>
-        {
-            if (ViewModel.Success) Nav<HomeView>();
-        });
+        _ = ViewModel.Initialize();
     }
 
     public void Nav<TView>() where TView : class, new()
@@ -69,6 +66,7 @@ public partial class MainViewModel : ViewModelBase
             ShowRetry = false;
             await App.CurrentInstance.Client.Initialize();
             Success = true;
+            App.CurrentInstance.MainView.Nav<HomeView>();
         }
         catch (Exception ex)
         {

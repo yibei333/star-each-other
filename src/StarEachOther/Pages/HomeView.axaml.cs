@@ -50,11 +50,10 @@ public partial class HomeView : UserControl
         result = await App.CurrentInstance.Client.Request(async client =>
         {
             var user = await client.User.Current();
-            var model = await client.Connection.Get<List<StarredRepositoryModel>>(new Uri($"{GitHubClient.GitHubApiUrl}users/{user.Login}/starred"), TimeSpan.FromSeconds(60));
-            if (!model.HttpResponse.IsSuccessStatusCode()) throw new Exception("获取数据失败");
-            StarredRepoList = model.Body;
+            var model = await new ApiConnection(client.Connection).GetAll<StarredRepositoryModel>(new Uri($"{GitHubClient.GitHubApiUrl}users/{user.Login}/starred"));
+            StarredRepoList = model.ToList();
         });
-        if (!result) return result;
+        if (!result) return false;
 
         //my repo
         result = await App.CurrentInstance.Client.Request(async client =>
@@ -139,5 +138,5 @@ public class ButtonActiveConverter : IValueConverter
 
 public class StarredRepositoryModel
 {
-    public string? Url { get; set; }
+    public string? HtmlUrl { get; set; }
 }

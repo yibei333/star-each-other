@@ -4,8 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Enums;
+using DialogHostAvalonia;
 using StarEachOther.Core;
 using StarEachOther.Pages;
 using System;
@@ -60,7 +59,7 @@ public partial class App : Application
 
     async Task OnRequestException(Exception e)
     {
-        await Alert("错误", e.Message);
+        await Alert(e.Message);
         //MainView.Refresh();
     }
 
@@ -77,9 +76,13 @@ public partial class App : Application
         await Task.CompletedTask;
     }
 
-    public static async Task Alert(string title, string text)
+    public static async Task Alert(string message)
     {
-        var box = MessageBoxManager.GetMessageBoxStandard(title, text, ButtonEnum.Ok);
-        await box.ShowAsync();
+        await DialogHost.Show(new DialogViewModel { Message = message });
     }
+}
+
+public class DialogViewModel
+{
+    public string? Message { get; set; }
 }

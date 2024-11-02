@@ -41,6 +41,12 @@ public partial class MainView : UserControl
             }
         });
     }
+
+    public void SetLoadingState(bool isLoading, string? loadingText)
+    {
+        ViewModel.Loading = isLoading;
+        ViewModel.LoadingText = loadingText;
+    }
 }
 
 public partial class MainViewModel : ViewModelBase
@@ -55,22 +61,29 @@ public partial class MainViewModel : ViewModelBase
     bool success;
 
     [ObservableProperty]
-    string? message = "初始化...";
+    string? loadingText;
+
+    [ObservableProperty]
+    bool loading;
 
     [RelayCommand]
     public async Task Initialize()
     {
         try
         {
-            Message = "初始化...";
+            Loading = true;
+            LoadingText = "初始化...";
             ShowRetry = false;
             await App.CurrentInstance.Client.Initialize();
             Success = true;
             App.CurrentInstance.MainView.Nav<HomeView>();
+            LoadingText = string.Empty;
+            Loading = false;
         }
         catch (Exception ex)
         {
-            Message = ex.Message;
+            Loading = false;
+            LoadingText = ex.Message;
             ShowRetry = true;
         }
     }

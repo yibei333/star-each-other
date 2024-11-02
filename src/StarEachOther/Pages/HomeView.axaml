@@ -1,64 +1,76 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl x:Class="StarEachOther.Pages.HomeView"
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:semi="https://irihi.tech/semi"
-             xmlns:local="clr-namespace:StarEachOther.Pages"
-			 xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:StarEachOther.Pages"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="StarEachOther.Pages.HomeView"
-			 x:DataType="local:HomeViewModel">
-	<Design.DataContext>
-		<local:HomeViewModel/>
-	</Design.DataContext>
-	<UserControl.Resources>
-		<local:ButtonActiveConverter x:Key="ButtonActiveConverter"/>
-	</UserControl.Resources>
-	<Grid RowDefinitions="Auto *">
-		<Grid Grid.Row="0" Margin="6 6 6 0">
-			<Button HorizontalAlignment="Left" Command="{Binding RefreshCommand}">
-				<StackPanel Orientation="Horizontal">
-					<materialIcons:MaterialIcon Kind="Refresh" />
-					<TextBlock>刷新</TextBlock>
+             xmlns:semi="https://irihi.tech/semi"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="local:HomeViewModel"
+             mc:Ignorable="d">
+    <Design.DataContext>
+        <local:HomeViewModel />
+    </Design.DataContext>
+    <UserControl.Resources>
+        <local:ButtonActiveConverter x:Key="ButtonActiveConverter" />
+    </UserControl.Resources>
+	<Grid>
+		<Grid IsVisible="{Binding !ShowRetry}" RowDefinitions="Auto *">
+			<Grid Grid.Row="0" Margin="6,6,6,0">
+				<Button HorizontalAlignment="Left" Command="{Binding RefreshCommand}">
+					<StackPanel Orientation="Horizontal">
+						<materialIcons:MaterialIcon Kind="Refresh" />
+						<TextBlock>刷新</TextBlock>
+					</StackPanel>
+				</Button>
+				<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+					<Button Classes="Tertiary"
+							Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=1}"
+							Command="{Binding SwitchWaitForStarViewCommand}">
+						<StackPanel Orientation="Horizontal">
+							<materialIcons:MaterialIcon Kind="StarOutline" />
+							<TextBlock>去点赞</TextBlock>
+						</StackPanel>
+					</Button>
+					<Button Margin="6,0"
+							Classes="Tertiary"
+							Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=2}"
+							Command="{Binding SwitchStarredViewCommand}">
+						<StackPanel Orientation="Horizontal">
+							<materialIcons:MaterialIcon Kind="Star" />
+							<TextBlock>已点赞</TextBlock>
+						</StackPanel>
+					</Button>
+					<Button Classes="Tertiary"
+							Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=3}"
+							Command="{Binding SwitchMyRepositoryViewCommand}">
+						<StackPanel Orientation="Horizontal">
+							<materialIcons:MaterialIcon Kind="SourceRepositories" />
+							<TextBlock>我的仓库</TextBlock>
+						</StackPanel>
+					</Button>
 				</StackPanel>
-			</Button>
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-				<Button Command="{Binding SwitchWaitForStarViewCommand}"
-						Classes="Tertiary"
-						Classes.Success="{Binding Index,Converter={StaticResource ButtonActiveConverter},ConverterParameter=1}">
-					<StackPanel Orientation="Horizontal">
-						<materialIcons:MaterialIcon Kind="StarOutline" />
-						<TextBlock>去点赞</TextBlock>
-					</StackPanel>
-				</Button>
-				<Button Command="{Binding SwitchStarredViewCommand}"
-						Classes="Tertiary"
-						Margin="6 0"
-						Classes.Success="{Binding Index,Converter={StaticResource ButtonActiveConverter},ConverterParameter=2}">
-					<StackPanel Orientation="Horizontal">
-						<materialIcons:MaterialIcon Kind="Star" />
-						<TextBlock>已点赞</TextBlock>
-					</StackPanel>
-				</Button>
-				<Button Command="{Binding SwitchMyRepositoryViewCommand}"
-						Classes="Tertiary"
-						Classes.Success="{Binding Index,Converter={StaticResource ButtonActiveConverter},ConverterParameter=3}">
-					<StackPanel Orientation="Horizontal">
-						<materialIcons:MaterialIcon Kind="SourceRepositories" />
-						<TextBlock>我的仓库</TextBlock>
-					</StackPanel>
-				</Button>
-			</StackPanel>
-			<HyperlinkButton Grid.Column="1"
-							 NavigateUri="{Binding SupportAutherUrl}"
-							 HorizontalAlignment="Right"
-							 Foreground="BlueViolet"
-							 Content="支持一下作者"/>
+				<HyperlinkButton Grid.Column="1"
+								 HorizontalAlignment="Right"
+								 VerticalAlignment="Center"
+								 Content="帮作者续命"
+								 Foreground="BlueViolet"
+								 NavigateUri="{Binding SupportAutherUrl}" />
+			</Grid>
+			<Grid Grid.Row="1">
+				<Border Margin="6"
+						BorderBrush="#eee"
+						BorderThickness="1"
+						CornerRadius="6">
+					<ContentControl Margin="6" Content="{Binding View}" />
+				</Border>
+			</Grid>
 		</Grid>
-		<Grid Grid.Row="1">
-			<Border BorderThickness="1" BorderBrush="#eee" CornerRadius="6" Margin="6">
-				<ContentControl Content="{Binding View}" Margin="6"/>
-			</Border>
+
+		<Grid IsVisible="{Binding ShowRetry}">
+			<Button Command="{Binding RefreshCommand}" Content="重试"/>
 		</Grid>
 	</Grid>
 </UserControl>

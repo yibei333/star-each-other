@@ -41,7 +41,7 @@ public partial class HomeView : UserControl
         var text = await HttpExtension.GetText(Config.RepoListUrl);
         if (!text.Success)
         {
-            await App.Alert("错误", text.Data);
+            await App.Alert(text.Data);
             return result;
         }
         AllRepoList = text.Data.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Distinct().ToList();
@@ -69,6 +69,9 @@ public partial class HomeViewModel : ViewModelBase
 {
     [ObservableProperty]
     object? view;
+
+    [ObservableProperty]
+    bool showRetry;
 
     [ObservableProperty]
     int index = 1;
@@ -105,9 +108,17 @@ public partial class HomeViewModel : ViewModelBase
     [RelayCommand]
     public async Task Refresh()
     {
+        App.CurrentInstance.MainView.SetLoadingState(true, "加载数据");
         if (await HomeView.SetRepo())
         {
+            ShowRetry = false;
+            App.CurrentInstance.MainView.SetLoadingState(false, null);
             Switch(Index);
+        }
+        else
+        {
+            ShowRetry = true;
+            App.CurrentInstance.MainView.SetLoadingState(false, null);
         }
     }
 }

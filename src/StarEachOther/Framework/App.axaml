@@ -3,11 +3,14 @@
              xmlns:sys="clr-namespace:System;assembly=System.Runtime"
 			 xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
 			 xmlns:semi="https://irihi.tech/semi"
+			 xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              x:Class="StarEachOther.Framework.App"
              RequestedThemeVariant="Default">
 	<Application.Styles>
 		<semi:SemiTheme Locale="zh-CN" />
 		<materialIcons:MaterialIconStyles />
+		<StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml"/>
+		<dialogHostAvalonia:DialogHostStyles />
 	</Application.Styles>
 	<Application.Resources>
 		<sys:Double x:Key="ButtonDefaultFontSize">16</sys:Double>

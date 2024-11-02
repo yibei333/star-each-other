@@ -1,20 +1,64 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl x:Class="StarEachOther.Framework.MainView"
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:StarEachOther.Framework"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="StarEachOther.Framework.MainView"
-			 x:DataType="local:MainViewModel">
-	<Design.DataContext>
-		<local:MainViewModel/>
-	</Design.DataContext>
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+			 xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="local:MainViewModel"
+             mc:Ignorable="d">
+    <Design.DataContext>
+        <local:MainViewModel />
+    </Design.DataContext>
 
-	<Grid>
-		<StackPanel IsVisible="{Binding !Success}" VerticalAlignment="Center">
-			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Message}"/>
-			<Button IsVisible="{Binding ShowRetry}" Command="{Binding InitializeCommand}" HorizontalAlignment="Center">重试</Button>
-		</StackPanel>
-		<ContentControl Content="{Binding View}" IsVisible="{Binding Success}"/>
-	</Grid>
+	<dialogHost:DialogHost CloseOnClickAway="False" Background="White" DialogMargin="0">
+		<dialogHost:DialogHost.DataTemplates>
+			<DataTemplate DataType="local:DialogViewModel">
+				<Grid RowDefinitions="100 Auto" Width="200">
+					<ScrollViewer>
+						<TextBlock HorizontalAlignment="Center" 
+								   VerticalAlignment="Center" 
+								   Padding="6"
+								   TextWrapping="Wrap"
+								   Text="{Binding Message}"/>
+					</ScrollViewer>
+					<Grid Grid.Row="1" Background="#eee">
+						<Button Margin="6"
+								Classes="Small"
+								HorizontalAlignment="Right"
+								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
+								Content="关闭"/>
+					</Grid>
+				</Grid>
+			</DataTemplate>
+		</dialogHost:DialogHost.DataTemplates>
+		<Grid>
+			<StackPanel VerticalAlignment="Center" IsVisible="{Binding !Success}">
+				<TextBlock Text="{Binding LoadingText}" 
+						   IsVisible="{Binding !Loading}"
+						   HorizontalAlignment="Center"/>
+				<Button HorizontalAlignment="Center"
+						Margin="0 6 0 0"
+						Command="{Binding InitializeCommand}"
+						IsVisible="{Binding ShowRetry}"
+						Content="重试"/>
+			</StackPanel>
+
+			<ContentControl Content="{Binding View}" IsVisible="{Binding Success}" />
+
+			<Grid Background="#736f6f73" IsVisible="{Binding Loading}">
+				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+					<progRing:ProgressRing Width="40"
+										   Height="40"
+										   Margin="0,0,0,6"
+										   Foreground="Green"
+										   IsActive="True" />
+					<TextBlock Text="{Binding LoadingText}" />
+				</StackPanel>
+			</Grid>
+		</Grid>
+	</dialogHost:DialogHost>
 </UserControl>

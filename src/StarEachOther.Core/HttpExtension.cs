@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpDevLib;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,25 +12,33 @@ public static class HttpExtension
     {
         try
         {
-            using var client = new HttpClient();
+            using var client = new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(10)
+            };
             var text = await client.GetStringAsync(url);
             return new HttpResponse<string>(true, text);
         }
-        catch
+        catch (Exception ex)
         {
+            if (Config.ProxyUrl.IsNullOrWhiteSpace()) return new HttpResponse<string>(false, ex.Message);
+
             try
             {
                 var handler = new HttpClientHandler
                 {
                     UseProxy = true,
-                    Proxy = new WebProxy("http://localhost:7890")
+                    Proxy = new WebProxy(Config.ProxyUrl)
                 };
 
-                using var client = new HttpClient(handler);
+                using var client = new HttpClient(handler)
+                {
+                    Timeout = TimeSpan.FromSeconds(10)
+                };
                 var text = await client.GetStringAsync(url);
                 return new HttpResponse<string>(true, text);
             }
-            catch (Exception ex)
+            catch
             {
                 return new HttpResponse<string>(false, ex.Message);
             }

@@ -2,6 +2,7 @@
 
 public class Config
 {
+    public static readonly string ProxyUrl = "http://127.0.0.1:7890";
     public static readonly int Port = 1088;
     public static string Url => $"http://localhost:{Port}";
     public const string SigninCallbackEndpoint = "/SignInCallback";

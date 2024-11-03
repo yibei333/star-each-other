@@ -167,7 +167,9 @@ public class GithubClientWrapper
     {
         if (Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
-            return AppDomain.CurrentDomain.BaseDirectory.CombinePath("../.cache");
+            var path = AppDomain.CurrentDomain.BaseDirectory.CombinePath("../userdata/.cache");
+            new FileInfo(path).Directory.FullName.CreateDirectoryIfNotExist();
+            return path;
         }
         else
         {

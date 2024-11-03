@@ -16,7 +16,9 @@ public static class HttpExtension
             {
                 Timeout = TimeSpan.FromSeconds(10)
             };
-            var text = await client.GetStringAsync(url);
+            var response = await client.GetAsync(url);
+            var text = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode) throw new Exception(text);
             return new HttpResponse<string>(true, text);
         }
         catch (Exception ex)
@@ -35,7 +37,9 @@ public static class HttpExtension
                 {
                     Timeout = TimeSpan.FromSeconds(10)
                 };
-                var text = await client.GetStringAsync(url);
+                var response = await client.GetAsync(url);
+                var text = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode) throw new Exception(text);
                 return new HttpResponse<string>(true, text);
             }
             catch

@@ -7,7 +7,7 @@ using StarEachOther.Framework;
 namespace StarEachOther.Android
 {
     [Activity(
-        Label = "StarEachOther.Android",
+        Label = "互赞",
         Theme = "@style/MyTheme.NoActionBar",
         Icon = "@drawable/icon",
         MainLauncher = true,

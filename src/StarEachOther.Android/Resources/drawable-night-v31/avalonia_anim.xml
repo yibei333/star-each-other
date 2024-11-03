@@ -6,8 +6,8 @@
       android:name="vector"
       android:width="128dp"
       android:height="128dp"
-      android:viewportWidth="128"
-      android:viewportHeight="128">
+      android:viewportWidth="1024"
+      android:viewportHeight="1024">
       <group
         android:name="wrapper"
         android:translateX="21"
@@ -15,16 +15,7 @@
         <group android:name="group">
           <path
             android:name="path"
-            android:pathData="M 74.853 85.823 L 75.368 85.823 C 80.735 85.823 85.144 81.803 85.761 76.602 L 85.836 41.76 C 85.225 18.593 66.254 0 42.939 0 C 19.24 0 0.028 19.212 0.028 42.912 C 0.028 66.357 18.831 85.418 42.18 85.823 L 74.853 85.823 Z"
-            android:strokeWidth="1"/>
-          <path
-            android:name="path_1"
-            android:pathData="M 43.059 14.614 C 29.551 14.614 18.256 24.082 15.445 36.743 C 18.136 37.498 20.109 39.968 20.109 42.899 C 20.109 45.831 18.136 48.301 15.445 49.055 C 18.256 61.716 29.551 71.184 43.059 71.184 C 47.975 71.184 52.599 69.93 56.628 67.723 L 56.628 70.993 L 71.344 70.993 L 71.344 44.072 C 71.357 43.714 71.344 43.26 71.344 42.899 C 71.344 27.278 58.68 14.614 43.059 14.614 Z M 29.51 42.899 C 29.51 35.416 35.576 29.35 43.059 29.35 C 50.541 29.35 56.607 35.416 56.607 42.899 C 56.607 50.382 50.541 56.448 43.059 56.448 C 35.576 56.448 29.51 50.382 29.51 42.899 Z"
-            android:strokeWidth="1"
-            android:fillType="evenOdd"/>
-          <path
-            android:name="path_2"
-            android:pathData="M 18.105 42.88 C 18.105 45.38 16.078 47.407 13.579 47.407 C 11.079 47.407 9.052 45.38 9.052 42.88 C 9.052 40.381 11.079 38.354 13.579 38.354 C 16.078 38.354 18.105 40.381 18.105 42.88 Z"
+            android:pathData="M511.542857 14.057143C228.914286 13.942857 0 242.742857 0 525.142857 0 748.457143 143.2 938.285714 342.628571 1008c26.857143 6.742857 22.742857-12.342857 22.742858-25.371429v-88.571428c-155.085714 18.171429-161.371429-84.457143-171.771429-101.6C172.571429 756.571429 122.857143 747.428571 137.714286 730.285714c35.314286-18.171429 71.314286 4.571429 113.028571 66.171429 30.171429 44.685714 89.028571 37.142857 118.857143 29.714286 6.514286-26.857143 20.457143-50.857143 39.657143-69.485715-160.685714-28.8-227.657143-126.857143-227.657143-243.428571 0-56.571429 18.628571-108.571429 55.2-150.514286-23.314286-69.142857 2.171429-128.342857 5.6-137.142857 66.4-5.942857 135.428571 47.542857 140.8 51.771429 37.714286-10.171429 80.8-15.542857 129.028571-15.542858 48.457143 0 91.657143 5.6 129.714286 15.885715 12.914286-9.828571 76.914286-55.771429 138.628572-50.171429 3.314286 8.8 28.228571 66.628571 6.285714 134.857143 37.028571 42.057143 55.885714 94.514286 55.885714 151.2 0 116.8-67.428571 214.971429-228.571428 243.314286a145.714286 145.714286 0 0 1 43.542857 104v128.571428c0.914286 10.285714 0 20.457143 17.142857 20.457143 202.4-68.228571 348.114286-259.428571 348.114286-484.685714 0-282.514286-229.028571-511.2-511.428572-511.2z"
             android:strokeWidth="1"/>
         </group>
       </group>
@@ -37,28 +28,6 @@
         android:duration="1000"
         android:valueFrom="#00ffffff"
         android:valueTo="#161c2d"
-        android:valueType="colorType"
-        android:interpolator="@android:interpolator/fast_out_slow_in"/>
-    </aapt:attr>
-  </target>
-  <target android:name="path_1">
-    <aapt:attr name="android:animation">
-      <objectAnimator
-        android:propertyName="fillColor"
-        android:duration="1000"
-        android:valueFrom="#00ffffff"
-        android:valueTo="#f9f9fb"
-        android:valueType="colorType"
-        android:interpolator="@android:interpolator/fast_out_slow_in"/>
-    </aapt:attr>
-  </target>
-  <target android:name="path_2">
-    <aapt:attr name="android:animation">
-      <objectAnimator
-        android:propertyName="fillColor"
-        android:duration="1000"
-        android:valueFrom="#00ffffff"
-        android:valueTo="#f9f9fb"
         android:valueType="colorType"
         android:interpolator="@android:interpolator/fast_out_slow_in"/>
     </aapt:attr>

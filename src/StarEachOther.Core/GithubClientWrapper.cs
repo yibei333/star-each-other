@@ -127,7 +127,7 @@ public class GithubClientWrapper
     {
         try
         {
-            var path = "./.cache";
+            var path = GetCachePath();
             if (File.Exists(path))
             {
                 var text = File.ReadAllText(path);
@@ -151,7 +151,7 @@ public class GithubClientWrapper
                 expires = 24 * 60 * 60 * 1000;//默认为不过期,但是安全起见设置为一天
             }
 
-            var path = "./.cache";
+            var path = GetCachePath();
             path.CreateFileIfNotExist();
             var cache = new TokenCache { Token = token, Expires = DateTime.Now.ToUtcTimestamp() + expires };
             var text = cache.Serialize();
@@ -160,6 +160,18 @@ public class GithubClientWrapper
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
+        }
+    }
+
+    static string GetCachePath()
+    {
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+        {
+            return AppDomain.CurrentDomain.BaseDirectory.CombinePath(".cache");
+        }
+        else
+        {
+            return AppDomain.CurrentDomain.BaseDirectory.CombinePath("../.cache");
         }
     }
 }

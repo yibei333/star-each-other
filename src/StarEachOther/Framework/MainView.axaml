@@ -22,6 +22,7 @@
 						<TextBlock HorizontalAlignment="Center" 
 								   VerticalAlignment="Center" 
 								   Padding="6"
+								   Foreground="Black"
 								   TextWrapping="Wrap"
 								   Text="{Binding Message}"/>
 					</ScrollViewer>

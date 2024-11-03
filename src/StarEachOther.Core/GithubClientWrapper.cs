@@ -2,6 +2,8 @@
 using SharpDevLib;
 using SharpDevLib.Cryptography;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
@@ -73,6 +75,13 @@ public class GithubClientWrapper
             var array = decrypted.SplitToList(';');
             _clientId = array[0];
             _clientSecret = array[1];
+
+            var cachedToken = GetCachedToken();
+            if (cachedToken.NotNullOrWhiteSpace())
+            {
+                IsAuthenticated = true;
+                _client.Credentials = new Credentials(cachedToken);
+            }
         }
         catch (Exception ex)
         {
@@ -105,6 +114,7 @@ public class GithubClientWrapper
                     var token = await _client.Oauth.CreateAccessToken(request);
                     _client.Credentials = new Credentials(token.AccessToken);
                     IsAuthenticated = true;
+                    SetCachedToken(token.AccessToken, token.ExpiresIn);
                     return true;
                 }
             }
@@ -112,4 +122,50 @@ public class GithubClientWrapper
         catch { }
         return false;
     }
+
+    static string? GetCachedToken()
+    {
+        try
+        {
+            var path = "./.cache";
+            if (File.Exists(path))
+            {
+                var text = File.ReadAllText(path);
+                var cache = text.DeSerialize<TokenCache>();
+                if (cache.Expires > DateTime.Now.ToUtcTimestamp() && cache.Token.NotNullOrWhiteSpace()) return cache.Token;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
+        return null;
+    }
+
+    static void SetCachedToken(string token, long expires)
+    {
+        try
+        {
+            if (expires <= 0)
+            {
+                expires = 24 * 60 * 60 * 1000;//默认为不过期,但是安全起见设置为一天
+            }
+
+            var path = "./.cache";
+            path.CreateFileIfNotExist();
+            var cache = new TokenCache { Token = token, Expires = DateTime.Now.ToUtcTimestamp() + expires };
+            var text = cache.Serialize();
+            File.WriteAllText(path, text);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
+    }
+}
+
+class TokenCache
+{
+    public string? Token { get; set; }
+    public long Expires { get; set; }
 }

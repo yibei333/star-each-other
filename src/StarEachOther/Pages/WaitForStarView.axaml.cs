@@ -1,13 +1,13 @@
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Octokit;
+using StarEachOther.Core;
 using StarEachOther.Framework;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using StarEachOther.Core;
-using Octokit;
-using System;
 
 namespace StarEachOther.Pages;
 

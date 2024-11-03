@@ -10,6 +10,31 @@
 		<local:WaitForStarViewModel></local:WaitForStarViewModel>
 	</Design.DataContext>
 	<Grid>
-		<ItemsControl ItemsSource="{Binding Repo}"></ItemsControl>
+		<ItemsControl ItemsSource="{Binding Repo}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="local:RepoItemViewModel">
+					<Border Margin="6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
+						<Grid ColumnDefinitions="* Auto">
+							<HyperlinkButton VerticalAlignment="Center"
+											 Foreground="BlueViolet"
+											 NavigateUri="{Binding Url}">
+								<HyperlinkButton.Content>
+									<TextBlock Text="{Binding Url}" Padding="6 0" TextWrapping="Wrap"/>
+								</HyperlinkButton.Content>
+							</HyperlinkButton>
+							<Button Grid.Column="1"
+									Content="Star"
+									Command="{Binding StarCommand}"
+									VerticalAlignment="Center"/>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
 	</Grid>
 </UserControl>

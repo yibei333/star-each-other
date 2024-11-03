@@ -10,63 +10,66 @@
              d:DesignWidth="800"
              x:DataType="local:HomeViewModel"
              mc:Ignorable="d">
-    <Design.DataContext>
-        <local:HomeViewModel />
-    </Design.DataContext>
-    <UserControl.Resources>
-        <local:ButtonActiveConverter x:Key="ButtonActiveConverter" />
-    </UserControl.Resources>
+	<Design.DataContext>
+		<local:HomeViewModel />
+	</Design.DataContext>
+	<UserControl.Resources>
+		<local:ButtonActiveConverter x:Key="ButtonActiveConverter" />
+	</UserControl.Resources>
 	<Grid>
-		<Grid IsVisible="{Binding !ShowRetry}" RowDefinitions="Auto *">
-			<Grid Grid.Row="0" Margin="6,6,6,0">
-				<Button HorizontalAlignment="Left" Command="{Binding RefreshCommand}">
+		<Grid IsVisible="{Binding !ShowRetry}" RowDefinitions="Auto * Auto">
+
+			<StackPanel Grid.Row="0" Margin="6,6,6,0" HorizontalAlignment="Center" Orientation="Horizontal">
+				<Button Classes="Small" HorizontalAlignment="Left" Command="{Binding RefreshCommand}" Margin="0 0 6 0">
 					<StackPanel Orientation="Horizontal">
 						<materialIcons:MaterialIcon Kind="Refresh" />
 						<TextBlock>刷新</TextBlock>
 					</StackPanel>
 				</Button>
-				<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-					<Button Classes="Tertiary"
-							Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=1}"
-							Command="{Binding SwitchWaitForStarViewCommand}">
-						<StackPanel Orientation="Horizontal">
-							<materialIcons:MaterialIcon Kind="StarOutline" />
-							<TextBlock>去点赞</TextBlock>
-						</StackPanel>
-					</Button>
-					<Button Margin="6,0"
-							Classes="Tertiary"
-							Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=2}"
-							Command="{Binding SwitchStarredViewCommand}">
-						<StackPanel Orientation="Horizontal">
-							<materialIcons:MaterialIcon Kind="Star" />
-							<TextBlock>已点赞</TextBlock>
-						</StackPanel>
-					</Button>
-					<Button Classes="Tertiary"
-							Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=3}"
-							Command="{Binding SwitchMyRepositoryViewCommand}">
-						<StackPanel Orientation="Horizontal">
-							<materialIcons:MaterialIcon Kind="SourceRepositories" />
-							<TextBlock>我的仓库</TextBlock>
-						</StackPanel>
-					</Button>
-				</StackPanel>
-				<HyperlinkButton Grid.Column="1"
-								 HorizontalAlignment="Right"
-								 VerticalAlignment="Center"
-								 Content="帮作者续命"
-								 Foreground="BlueViolet"
-								 NavigateUri="{Binding SupportAutherUrl}" />
-			</Grid>
+				<Button Classes="Tertiary Small"
+						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=1}"
+						Command="{Binding SwitchWaitForStarViewCommand}">
+					<StackPanel Orientation="Horizontal">
+						<materialIcons:MaterialIcon Kind="StarOutline" />
+						<TextBlock>去Star</TextBlock>
+					</StackPanel>
+				</Button>
+				<Button Margin="6,0"
+						Classes="Tertiary Small"
+						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=2}"
+						Command="{Binding SwitchStarredViewCommand}">
+					<StackPanel Orientation="Horizontal">
+						<materialIcons:MaterialIcon Kind="Star" />
+						<TextBlock>已Star</TextBlock>
+					</StackPanel>
+				</Button>
+				<Button Classes="Tertiary Small"
+						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=3}"
+						Command="{Binding SwitchMyRepositoryViewCommand}">
+					<StackPanel Orientation="Horizontal">
+						<materialIcons:MaterialIcon Kind="SourceRepositories" />
+						<TextBlock>我的</TextBlock>
+					</StackPanel>
+				</Button>
+			</StackPanel>
+
 			<Grid Grid.Row="1">
 				<Border Margin="6"
 						BorderBrush="#eee"
 						BorderThickness="1"
 						CornerRadius="6">
-					<ContentControl Margin="6" Content="{Binding View}" />
+					<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+						<ContentControl Margin="6" Content="{Binding View}" />
+					</ScrollViewer>
 				</Border>
 			</Grid>
+
+			<HyperlinkButton Grid.Row="2"
+							 HorizontalAlignment="Center"
+							 VerticalAlignment="Center"
+							 Content="帮作者续命"
+							 Foreground="BlueViolet"
+							 NavigateUri="{Binding SupportAutherUrl}" />
 		</Grid>
 
 		<Grid IsVisible="{Binding ShowRetry}">

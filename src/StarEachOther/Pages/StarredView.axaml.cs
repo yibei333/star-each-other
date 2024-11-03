@@ -14,7 +14,7 @@ public partial class StarredView : UserControl
     }
 }
 
-public class StarredViewModel : ViewModelBase
+public partial class StarredViewModel : ViewModelBase
 {
     public StarredViewModel()
     {

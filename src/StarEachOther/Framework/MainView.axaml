@@ -36,9 +36,10 @@
 			</DataTemplate>
 		</dialogHost:DialogHost.DataTemplates>
 		<Grid>
-			<StackPanel VerticalAlignment="Center" IsVisible="{Binding !Success}">
+			<StackPanel VerticalAlignment="Center" IsVisible="{Binding !Success}" Margin="6">
 				<TextBlock Text="{Binding LoadingText}" 
 						   IsVisible="{Binding !Loading}"
+						   TextWrapping="Wrap"
 						   HorizontalAlignment="Center"/>
 				<Button HorizontalAlignment="Center"
 						Margin="0 6 0 0"

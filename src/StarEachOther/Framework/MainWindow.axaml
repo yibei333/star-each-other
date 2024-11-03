@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StarEachOther.Framework"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="500"
         x:Class="StarEachOther.Framework.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="StarEachOther">
+        Icon="/Assets/github.ico"
+		WindowStartupLocation="CenterScreen"
+        Title="Github互赞">
 </Window>

@@ -78,6 +78,7 @@ public partial class App : Application
 
     public static async Task Alert(string message)
     {
+        if (DialogHost.IsDialogOpen(null)) return;
         await DialogHost.Show(new DialogViewModel { Message = message });
     }
 }

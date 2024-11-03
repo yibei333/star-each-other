@@ -14,7 +14,7 @@ public partial class MyRepositoryView : UserControl
     }
 }
 
-public class MyRepositoryViewModel : ViewModelBase
+public partial class MyRepositoryViewModel : ViewModelBase
 {
     public MyRepositoryViewModel()
     {

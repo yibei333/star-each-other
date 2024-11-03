@@ -1,5 +1,5 @@
 #### 感谢支持
 
-<img src="https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/wechat.jpg">
+<img src="https://gitee.com/yibei333/images/raw/main/data/wechat.jpg">
 
-<img src="https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/alipay.jpg">
+<img src="https://gitee.com/yibei333/images/raw/main/data/alipay.jpg">

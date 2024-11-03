@@ -67,9 +67,15 @@
 			<HyperlinkButton Grid.Row="2"
 							 HorizontalAlignment="Center"
 							 VerticalAlignment="Center"
-							 Content="帮作者续命"
 							 Foreground="BlueViolet"
-							 NavigateUri="{Binding SupportAutherUrl}" />
+							 NavigateUri="{Binding SupportAutherUrl}">
+				<HyperlinkButton.Content>
+					<StackPanel Orientation="Horizontal">
+						<materialIcons:MaterialIcon Kind="ThumbUpOutline" />
+						<TextBlock Margin="6 0 0 0">支持下作者</TextBlock>
+					</StackPanel>
+				</HyperlinkButton.Content>
+			</HyperlinkButton>
 		</Grid>
 
 		<Grid IsVisible="{Binding ShowRetry}">

@@ -167,11 +167,11 @@ public class GithubClientWrapper
     {
         if (Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
-            return AppDomain.CurrentDomain.BaseDirectory.CombinePath(".cache");
+            return AppDomain.CurrentDomain.BaseDirectory.CombinePath("../.cache");
         }
         else
         {
-            return AppDomain.CurrentDomain.BaseDirectory.CombinePath("../.cache");
+            return AppDomain.CurrentDomain.BaseDirectory.CombinePath(".cache");
         }
     }
 }

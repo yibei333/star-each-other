@@ -10,5 +10,5 @@ public class Config
     public const string GithubSecretUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/secret.txt";
     public const string SupportAutherUrl = "https://github.com/yibei333/star-each-other/blob/main/assets/buymeacoffee.md";
     public const string RepoListUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/list.txt";
-    public const string NewRepoUrl = "https://github.com/yibei333/star-each-other/issues/new";
+    public const string NewRepoUrl = "https://github.com/yibei333/star-each-other/issues/new?title=加入列表&body=https://github.com/your/repo";
 }

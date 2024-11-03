@@ -17,8 +17,8 @@
 	<dialogHost:DialogHost CloseOnClickAway="False" Background="White" DialogMargin="0">
 		<dialogHost:DialogHost.DataTemplates>
 			<DataTemplate DataType="local:DialogViewModel">
-				<Grid RowDefinitions="100 Auto" Width="200">
-					<ScrollViewer>
+				<Grid RowDefinitions="* Auto" MinWidth="200" MaxWidth="400">
+					<ScrollViewer MinHeight="100" MaxHeight="500">
 						<TextBlock HorizontalAlignment="Center" 
 								   VerticalAlignment="Center" 
 								   Padding="6"

@@ -32,7 +32,6 @@ public partial class MyRepositoryViewModel : ViewModelBase
     [RelayCommand]
     public async Task New()
     {
-        await App.Alert("请添加一个Isuue,内容格式如下:【添加:https://github.com/your/repo】", "知道了");
         await App.CurrentInstance.Launcher.LaunchUriAsync(new System.Uri(Config.NewRepoUrl));
     }
 }

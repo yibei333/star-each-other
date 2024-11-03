@@ -76,14 +76,15 @@ public partial class App : Application
         await Task.CompletedTask;
     }
 
-    public static async Task Alert(string message)
+    public static async Task Alert(string message, string? buttonText = "¹Ø±Õ")
     {
         if (DialogHost.IsDialogOpen(null)) return;
-        await DialogHost.Show(new DialogViewModel { Message = message });
+        await DialogHost.Show(new DialogViewModel { Message = message, ButtonText = buttonText });
     }
 }
 
 public class DialogViewModel
 {
     public string? Message { get; set; }
+    public string? ButtonText { get; set; }
 }

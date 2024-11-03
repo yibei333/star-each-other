@@ -85,7 +85,7 @@ public class GithubClientWrapper
         _csrf = DateTime.Now.ToUtcTimestamp().ToString();
         var request = new OauthLoginRequest(_clientId)
         {
-            Scopes = { "user", "notifications" },
+            Scopes = { "user", "notifications", "public_repo" },
             State = _csrf,
             RedirectUri = new Uri(Config.Url.CombinePath(Config.SigninCallbackEndpoint))
         };

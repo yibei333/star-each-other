@@ -18,7 +18,7 @@ namespace StarEachOther.Pages;
 public partial class HomeView : UserControl
 {
     public static List<string> AllRepoList { get; private set; } = [];
-    public static List<StarredRepositoryModel> StarredRepoList { get; private set; } = [];
+    public static List<Repository> StarredRepoList { get; private set; } = [];
     public static List<Repository> MyRepoList { get; private set; } = [];
 
     public HomeView()
@@ -35,32 +35,46 @@ public partial class HomeView : UserControl
 
     public static async Task<bool> SetRepo()
     {
-        var result = false;
+        var result = await SetRegistedRepo();
+        if (!result) return false;
 
-        //all registered repo
+        result = await SetStarredRepo();
+        if (!result) return false;
+
+        result = await SetMyRepo();
+        if (!result) return false;
+
+        return true;
+    }
+
+    public static async Task<bool> SetRegistedRepo()
+    {
         var text = await HttpExtension.GetText(Config.RepoListUrl);
         if (!text.Success)
         {
             await App.Alert(text.Data);
-            return result;
+            return false;
         }
         AllRepoList = text.Data.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Distinct().ToList();
+        return true;
+    }
 
-        //starred repo
-        result = await App.CurrentInstance.Client.Request(async client =>
+    public static async Task<bool> SetStarredRepo()
+    {
+        return await App.CurrentInstance.Client.Request(async client =>
         {
             var user = await client.User.Current();
-            var model = await new ApiConnection(client.Connection).GetAll<StarredRepositoryModel>(new Uri($"{GitHubClient.GitHubApiUrl}users/{user.Login}/starred"));
+            var model = await new ApiConnection(client.Connection).GetAll<Repository>(new Uri($"{GitHubClient.GitHubApiUrl}users/{user.Login}/starred"));
             StarredRepoList = model.ToList();
         });
-        if (!result) return false;
+    }
 
-        //my repo
-        result = await App.CurrentInstance.Client.Request(async client =>
+    public static async Task<bool> SetMyRepo()
+    {
+        return await App.CurrentInstance.Client.Request(async client =>
         {
             MyRepoList = (await client.Repository.GetAllForCurrent(new RepositoryRequest { Type = RepositoryType.Public })).ToList();
         });
-        return result;
     }
 }
 
@@ -134,9 +148,4 @@ public class ButtonActiveConverter : IValueConverter
     {
         throw new NotImplementedException();
     }
-}
-
-public class StarredRepositoryModel
-{
-    public string? HtmlUrl { get; set; }
 }

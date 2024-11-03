@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:local="clr-namespace:StarEachOther.Pages"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,7 +10,37 @@
 	<Design.DataContext>
 		<local:MyRepositoryViewModel></local:MyRepositoryViewModel>
 	</Design.DataContext>
-	<Grid>
-		<ItemsControl ItemsSource="{Binding Repo}"></ItemsControl>
-	</Grid>
+	<StackPanel>
+		<Button Content="添加" 
+				HorizontalAlignment="Stretch" 
+				Margin="0 0 0 6"
+				Command="{Binding NewCommand}"/>
+		<ItemsControl ItemsSource="{Binding Repo}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="local:MyRepositoryItemViewModel">
+					<Border Margin="6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
+						<Grid ColumnDefinitions="Auto *">
+							<StackPanel Orientation="Horizontal">
+								<materialIcons:MaterialIcon Kind="Star" VerticalAlignment="Center" />
+								<TextBlock Text="{Binding StarCount}" VerticalAlignment="Center"/>
+							</StackPanel>
+							<HyperlinkButton Grid.Column="1" 
+											 VerticalAlignment="Center"
+											 Foreground="BlueViolet"
+											 NavigateUri="{Binding Url}">
+								<HyperlinkButton.Content>
+									<TextBlock Text="{Binding Url}" Padding="6 0" TextWrapping="Wrap"/>
+								</HyperlinkButton.Content>
+							</HyperlinkButton>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</StackPanel>
 </UserControl>

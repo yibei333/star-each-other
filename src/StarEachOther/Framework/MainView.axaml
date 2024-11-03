@@ -30,7 +30,7 @@
 								Classes="Small"
 								HorizontalAlignment="Right"
 								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
-								Content="关闭"/>
+								Content="{Binding ButtonText}"/>
 					</Grid>
 				</Grid>
 			</DataTemplate>

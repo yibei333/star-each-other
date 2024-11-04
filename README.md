@@ -1,5 +1,5 @@
 # 截图
-<img src="https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/src/StarEachOther/Assets/screenshot.png">
+<img src="https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/screenshot.png">
 
 # 使用前必读⚠️
 

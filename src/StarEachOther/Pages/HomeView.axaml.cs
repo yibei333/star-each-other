@@ -152,9 +152,9 @@ public partial class HomeViewModel : ViewModelBase
                 using var memoryStream = new MemoryStream();
                 stream.CopyTo(memoryStream);
                 var currentVersion = memoryStream.ToArray().Utf8Encode().Trim();
-                if (currentVersion != remoteVersion.Data)
+                if (currentVersion.NotNullOrWhiteSpace() && currentVersion != remoteVersion.Data)
                 {
-                    await App.Alert($"发现新版本:{remoteVersion}", "去下载");
+                    await App.Alert($"发现新版本:{remoteVersion.Data}", "去下载");
                     await App.CurrentInstance.Launcher.LaunchUriAsync(new Uri(Config.ReleaseUrl));
                 }
             }

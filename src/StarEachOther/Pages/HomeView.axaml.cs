@@ -1,8 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using Avalonia.Interactivity;
-using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,8 +13,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
 using System.Threading.Tasks;
 
 namespace StarEachOther.Pages;
@@ -145,23 +141,26 @@ public partial class HomeViewModel : ViewModelBase
 
     public async Task ChekcUpdate()
     {
-        var remoteVersion = await HttpExtension.GetText(Config.VersionUrl);
-        if (remoteVersion.Success && remoteVersion.Data.NotNullOrWhiteSpace())
+        try
         {
-            var assembly = this.GetType().Assembly;
-            var a = assembly.GetManifestResourceNames();
-            var stream= assembly.GetManifestResourceStream($"{assembly.GetName().Name}.Assets.version.txt");
-            if(stream is not null)
+            var remoteVersion = await HttpExtension.GetText(Config.VersionUrl);
+            if (remoteVersion.Success && remoteVersion.Data.NotNullOrWhiteSpace())
             {
+                var assembly = this.GetType().Assembly;
+                var uri = new Uri($"avares://{assembly.GetName().Name}/Assets/version.txt");
+                using var stream = AssetLoader.Open(uri);
                 using var memoryStream = new MemoryStream();
                 stream.CopyTo(memoryStream);
-                var currentVersion=memoryStream.ToArray().Utf8Encode().Trim();
+                var currentVersion = memoryStream.ToArray().Utf8Encode().Trim();
                 if (currentVersion != remoteVersion.Data)
                 {
-                    await App.Alert("发现新版本","去下载");
+                    await App.Alert($"发现新版本:{remoteVersion}", "去下载");
                     await App.CurrentInstance.Launcher.LaunchUriAsync(new Uri(Config.ReleaseUrl));
                 }
             }
+        }
+        catch
+        {
         }
     }
 }

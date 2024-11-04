@@ -7,10 +7,13 @@
 
 # 下载
 
-[android](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_android.apk)
-[windows_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_win_x64.exe)
-[linux_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_linux_x64.tgz)
-[osx_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_osx_x64.zip)
+* [android](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_android.apk)
+
+* [windows_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_win_x64.exe)
+
+* [linux_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_linux_x64.tgz)
+
+* [osx_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_osx_x64.zip)
 
 # 交流
 * QQ交流群:471994597

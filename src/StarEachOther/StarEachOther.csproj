@@ -11,6 +11,7 @@
 
 	<ItemGroup>
 	  <None Remove="Assets\repo.svg" />
+	  <None Remove="Assets\version.txt" />
 	</ItemGroup>
 
 	<ItemGroup>

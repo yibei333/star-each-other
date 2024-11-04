@@ -1,6 +1,9 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using Avalonia.Interactivity;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Octokit;
@@ -10,13 +13,17 @@ using StarEachOther.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Threading.Tasks;
 
 namespace StarEachOther.Pages;
 
 public partial class HomeView : UserControl
 {
+    public HomeViewModel ViewModel { get; }
     public static List<string> AllRepoList { get; private set; } = [];
     public static List<Repository> StarredRepoList { get; private set; } = [];
     public static List<Repository> MyRepoList { get; private set; } = [];
@@ -24,13 +31,14 @@ public partial class HomeView : UserControl
     public HomeView()
     {
         InitializeComponent();
-        DataContext = new HomeViewModel();
+        ViewModel = new HomeViewModel();
+        DataContext = ViewModel;
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-        _ = (DataContext as HomeViewModel)!.Refresh();
+        _ = ViewModel.ChekcUpdate().ContinueWith(t => ViewModel.Refresh());
     }
 
     public static async Task<bool> SetRepo()
@@ -132,6 +140,28 @@ public partial class HomeViewModel : ViewModelBase
         {
             ShowRetry = true;
             App.CurrentInstance.MainView.SetLoadingState(false, null);
+        }
+    }
+
+    public async Task ChekcUpdate()
+    {
+        var remoteVersion = await HttpExtension.GetText(Config.VersionUrl);
+        if (remoteVersion.Success && remoteVersion.Data.NotNullOrWhiteSpace())
+        {
+            var assembly = this.GetType().Assembly;
+            var a = assembly.GetManifestResourceNames();
+            var stream= assembly.GetManifestResourceStream($"{assembly.GetName().Name}.Assets.version.txt");
+            if(stream is not null)
+            {
+                using var memoryStream = new MemoryStream();
+                stream.CopyTo(memoryStream);
+                var currentVersion=memoryStream.ToArray().Utf8Encode().Trim();
+                if (currentVersion != remoteVersion.Data)
+                {
+                    await App.Alert("发现新版本","去下载");
+                    await App.CurrentInstance.Launcher.LaunchUriAsync(new Uri(Config.ReleaseUrl));
+                }
+            }
         }
     }
 }

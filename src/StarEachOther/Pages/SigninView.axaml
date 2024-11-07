@@ -11,6 +11,6 @@
 			 VerticalAlignment="Center">
 	<StackPanel>
 		<TextBlock HorizontalAlignment="Center" Text="{Binding Message}"/>
-		<Button Classes="Success Large" Margin="0 6 0 0" Theme="{DynamicResource SolidButton}" Command="{Binding AuthCommand}" HorizontalAlignment="Center">登录您的Github账号</Button>
+		<Button Classes="Success Large" Margin="0 6 0 0" Theme="{DynamicResource SolidButton}" Command="{Binding AuthCommand}" HorizontalAlignment="Center">前往Github授权</Button>
 	</StackPanel>
 </UserControl>

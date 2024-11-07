@@ -19,10 +19,10 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate DataType="local:StarredItemViewModel">
-					<Border Margin="6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
+					<Border Margin="0 0 0 6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
 						<Grid ColumnDefinitions="Auto *">
 							<StackPanel Orientation="Horizontal" Margin="6 0 0 0">
-								<materialIcons:MaterialIcon Kind="Star" VerticalAlignment="Center" />
+								<materialIcons:MaterialIcon Kind="Star" Foreground="#f3d200" VerticalAlignment="Center" />
 								<TextBlock Text="{Binding StarCount}" VerticalAlignment="Center"/>
 							</StackPanel>
 							<HyperlinkButton Grid.Column="1" 

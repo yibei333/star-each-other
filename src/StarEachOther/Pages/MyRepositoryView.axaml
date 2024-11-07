@@ -11,10 +11,14 @@
 		<local:MyRepositoryViewModel></local:MyRepositoryViewModel>
 	</Design.DataContext>
 	<StackPanel>
-		<Button Content="添加" 
-				HorizontalAlignment="Stretch" 
+		<Button HorizontalAlignment="Stretch"
 				Margin="0 0 0 6"
-				Command="{Binding NewCommand}"/>
+				Command="{Binding NewCommand}">
+			<StackPanel Orientation="Horizontal">
+				<materialIcons:MaterialIcon Kind="Add" VerticalAlignment="Center" />
+				<TextBlock VerticalAlignment="Center" Margin="2 0 0 0">添加我的仓库</TextBlock>
+			</StackPanel>
+		</Button>
 		<ItemsControl ItemsSource="{Binding Repo}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
@@ -23,10 +27,10 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate DataType="local:MyRepositoryItemViewModel">
-					<Border Margin="6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
+					<Border Margin="0 0 0 6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
 						<Grid ColumnDefinitions="Auto *">
 							<StackPanel Orientation="Horizontal" Margin="6 0 0 0">
-								<materialIcons:MaterialIcon Kind="Star" VerticalAlignment="Center" />
+								<materialIcons:MaterialIcon Kind="Star" Foreground="#f3d200" VerticalAlignment="Center" />
 								<TextBlock Text="{Binding StarCount}" VerticalAlignment="Center"/>
 							</StackPanel>
 							<HyperlinkButton Grid.Column="1" 

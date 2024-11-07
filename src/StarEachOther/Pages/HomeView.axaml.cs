@@ -34,7 +34,8 @@ public partial class HomeView : UserControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-        _ = ViewModel.ChekcUpdate().ContinueWith(t => ViewModel.Refresh());
+        _ = ViewModel.Refresh();
+        ViewModel.ChekcUpdate();
     }
 
     public static async Task<bool> SetRepo()
@@ -129,8 +130,8 @@ public partial class HomeViewModel : ViewModelBase
         if (await HomeView.SetRepo())
         {
             ShowRetry = false;
-            App.CurrentInstance.MainView.SetLoadingState(false, null);
             Switch(Index);
+            App.CurrentInstance.MainView.SetLoadingState(false, null);
         }
         else
         {
@@ -139,7 +140,7 @@ public partial class HomeViewModel : ViewModelBase
         }
     }
 
-    public async Task ChekcUpdate()
+    public async void ChekcUpdate()
     {
         try
         {

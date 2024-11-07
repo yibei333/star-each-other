@@ -31,4 +31,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\StarEachOther\StarEachOther.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Resources\drawable\" />
+	</ItemGroup>
 </Project>

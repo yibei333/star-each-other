@@ -32,7 +32,11 @@ public partial class WaitForStarViewModel : ViewModelBase
             select new WaitForStarItemViewModel(a, this)
         ).ToList();
         Repo = new ObservableCollection<WaitForStarItemViewModel>(data);
+        if (data.Count <= 0) ShowContent = true;
     }
+
+    [ObservableProperty]
+    bool showContent;
 
     public ObservableCollection<WaitForStarItemViewModel> Repo { get; }
 }
@@ -56,7 +60,7 @@ public partial class WaitForStarItemViewModel : ViewModelBase
         var repoInfo = Url.GetUserAndRepoNameByUrl();
         if (!repoInfo.Item1)
         {
-            await App.Alert($"½âÎöurl({Url})Ê§°Ü,ÇëÁªÏµ¿ª·¢Õß");
+            await App.Alert($"è§£æurl({Url})å¤±è´¥,è¯·è”ç³»å¼€å‘è€…");
             return;
         }
 

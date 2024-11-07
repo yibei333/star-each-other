@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:local="clr-namespace:StarEachOther.Pages"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -18,7 +19,7 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate DataType="local:WaitForStarItemViewModel">
-					<Border Margin="6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
+					<Border Margin="0 0 0 6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
 						<Grid ColumnDefinitions="* Auto">
 							<HyperlinkButton VerticalAlignment="Center"
 											 Foreground="BlueViolet"
@@ -36,5 +37,10 @@
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>
+		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+			<materialIcons:MaterialIcon Kind="PlaylistCheck" Width="48" Height="48" Foreground="Green" VerticalAlignment="Center" />
+			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap">已经没有待点赞的项目了</TextBlock>
+			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap">快去邀请更多的小伙伴加入吧!!!</TextBlock>
+		</StackPanel>
 	</Grid>
 </UserControl>

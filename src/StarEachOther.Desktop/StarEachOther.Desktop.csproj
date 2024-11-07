@@ -6,8 +6,9 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-		<AssemblyName>Github互赞</AssemblyName>
+		<AssemblyName>GithubStarEachOther</AssemblyName>
 		<ApplicationIcon>github.ico</ApplicationIcon>
+		<AssemblyVersion>1.0.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>

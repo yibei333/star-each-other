@@ -13,6 +13,7 @@
 	<StackPanel>
 		<Button HorizontalAlignment="Stretch"
 				Margin="0 0 0 6"
+				Theme="{DynamicResource SolidButton}"
 				Command="{Binding NewCommand}">
 			<StackPanel Orientation="Horizontal">
 				<materialIcons:MaterialIcon Kind="Add" VerticalAlignment="Center" />

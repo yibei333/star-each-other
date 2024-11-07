@@ -70,7 +70,7 @@ public partial class HomeView : UserControl
         {
             var user = await client.User.Current();
             var model = await new ApiConnection(client.Connection).GetAll<Repository>(new Uri($"{GitHubClient.GitHubApiUrl}users/{user.Login}/starred"));
-            StarredRepoList = model.ToList();
+            StarredRepoList = [.. model];
         });
     }
 
@@ -78,7 +78,7 @@ public partial class HomeView : UserControl
     {
         return await App.CurrentInstance.Client.Request(async client =>
         {
-            MyRepoList = (await client.Repository.GetAllForCurrent(new RepositoryRequest { Type = RepositoryType.Public })).ToList();
+            MyRepoList = [.. (await client.Repository.GetAllForCurrent(new RepositoryRequest { Type = RepositoryType.Public }))];
         });
     }
 }

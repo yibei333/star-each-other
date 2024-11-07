@@ -85,7 +85,7 @@ public class GithubClientWrapper
         }
         catch (Exception ex)
         {
-            throw new Exception($"{ex.Message}\r\n可能你需要打开代理并重启应用", ex);
+            throw new Exception($"网络不佳\r\n{ex.Message}\r\n可能你需要使用代理", ex);
         }
     }
 

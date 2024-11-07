@@ -30,7 +30,9 @@ public partial class MyRepositoryViewModel : ViewModelBase
     public ObservableCollection<MyRepositoryItemViewModel> Repo { get; }
 
     [RelayCommand]
+#pragma warning disable CA1822 // Mark members as static
     public async Task New()
+#pragma warning restore CA1822 // Mark members as static
     {
         await App.CurrentInstance.Launcher.LaunchUriAsync(new System.Uri(Config.NewRepoUrl));
     }

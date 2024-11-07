@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:StarEachOther.Framework"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"			 
+			 xmlns:semi="https://irihi.tech/semi"
              xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
 			 xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              d:DesignHeight="450"
@@ -30,19 +31,21 @@
 						<Button Margin="6"
 								Classes="Small"
 								HorizontalAlignment="Right"
+								Theme="{DynamicResource SolidButton}"
 								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
 								Content="{Binding ButtonText}"/>
 					</Grid>
 				</Grid>
 			</DataTemplate>
 		</dialogHost:DialogHost.DataTemplates>
-		<Grid Background="White">
-			<StackPanel VerticalAlignment="Center" IsVisible="{Binding !Success}" Margin="6">
+		<Grid Background="White" TextElement.Foreground="Black">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding !Success}" Margin="6">
 				<TextBlock Text="{Binding LoadingText}" 
 						   IsVisible="{Binding !Loading}"
 						   TextWrapping="Wrap"
 						   HorizontalAlignment="Center"/>
 				<Button HorizontalAlignment="Center"
+						Theme="{DynamicResource SolidButton}"
 						Margin="0 6 0 0"
 						Command="{Binding InitializeCommand}"
 						IsVisible="{Binding ShowRetry}"

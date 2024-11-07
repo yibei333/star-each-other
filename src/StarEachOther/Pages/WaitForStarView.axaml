@@ -30,6 +30,7 @@
 							</HyperlinkButton>
 							<Button Grid.Column="1"
 									Content="Star"
+									Theme="{DynamicResource SolidButton}"
 									Command="{Binding StarCommand}"
 									VerticalAlignment="Center"/>
 						</Grid>

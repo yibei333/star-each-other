@@ -20,13 +20,18 @@
 		<Grid IsVisible="{Binding !ShowRetry}" RowDefinitions="Auto * Auto">
 
 			<StackPanel Grid.Row="0" Margin="6,6,6,0" HorizontalAlignment="Center" Orientation="Horizontal">
-				<Button Classes="Small" HorizontalAlignment="Left" Command="{Binding RefreshCommand}" Margin="0 0 6 0">
+				<Button Classes="Small" 
+						HorizontalAlignment="Left" 
+						Theme="{DynamicResource SolidButton}" 
+						Command="{Binding RefreshCommand}" 
+						Margin="0 0 6 0">
 					<StackPanel Orientation="Horizontal">
 						<materialIcons:MaterialIcon Kind="Refresh" />
 						<TextBlock>刷新</TextBlock>
 					</StackPanel>
 				</Button>
 				<Button Classes="Tertiary Small"
+						Theme="{DynamicResource SolidButton}" 
 						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=1}"
 						Command="{Binding SwitchWaitForStarViewCommand}">
 					<StackPanel Orientation="Horizontal">
@@ -36,6 +41,7 @@
 				</Button>
 				<Button Margin="6,0"
 						Classes="Tertiary Small"
+						Theme="{DynamicResource SolidButton}" 
 						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=2}"
 						Command="{Binding SwitchStarredViewCommand}">
 					<StackPanel Orientation="Horizontal">
@@ -44,6 +50,7 @@
 					</StackPanel>
 				</Button>
 				<Button Classes="Tertiary Small"
+						Theme="{DynamicResource SolidButton}" 
 						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=3}"
 						Command="{Binding SwitchMyRepositoryViewCommand}">
 					<StackPanel Orientation="Horizontal">
@@ -78,8 +85,9 @@
 			</HyperlinkButton>
 		</Grid>
 
-		<Grid IsVisible="{Binding ShowRetry}">
-			<Button Command="{Binding RefreshCommand}" Content="重试"/>
-		</Grid>
+		<StackPanel IsVisible="{Binding ShowRetry}" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBlock TextAlignment="Center" Margin="0 0 0 6">当前网络不佳</TextBlock>
+			<Button HorizontalAlignment="Center" Command="{Binding RefreshCommand}" Theme="{DynamicResource SolidButton}" Content="重试"/>
+		</StackPanel>
 	</Grid>
 </UserControl>

@@ -7,9 +7,9 @@
 
 * [windows_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_win_x64.exe)
 
-* [linux_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_linux_x64.tgz)
+* [linux_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_linux_x64.tar.gz)
 
-* [osx_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_osx_x64.zip)
+* [osx_x64](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_osx_x64.tar.gz)
 
 # 交流
 * QQ交流群:471994597

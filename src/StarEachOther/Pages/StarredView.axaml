@@ -23,7 +23,7 @@
 						<Grid ColumnDefinitions="Auto *">
 							<StackPanel Orientation="Horizontal" Margin="6 0 0 0">
 								<materialIcons:MaterialIcon Kind="Star" Foreground="#f3d200" VerticalAlignment="Center" />
-								<TextBlock Text="{Binding StarCount}" VerticalAlignment="Center"/>
+								<TextBlock Text="{Binding StarCount}" MinWidth="50" VerticalAlignment="Center"/>
 							</StackPanel>
 							<HyperlinkButton Grid.Column="1" 
 											 VerticalAlignment="Center"
@@ -38,5 +38,11 @@
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>
+
+		<StackPanel IsVisible="{Binding ShowContent}" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<materialIcons:MaterialIcon Kind="PlaylistCheck" Width="48" Height="48" Foreground="Green" VerticalAlignment="Center" />
+			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap">你还没有点赞任何项目</TextBlock>
+			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap">快去点赞吧!!!</TextBlock>
+		</StackPanel>
 	</Grid>
 </UserControl>

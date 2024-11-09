@@ -1,0 +1,27 @@
+<UserControl x:Class="StarEachOther.Pages.InitialView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:StarEachOther.Pages"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:semi="https://irihi.tech/semi"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="local:InitialViewModel"
+             mc:Ignorable="d">
+	<Design.DataContext>
+		<local:InitialViewModel />
+	</Design.DataContext>
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6">
+		<TextBlock Text="{Binding Message}"
+				   TextWrapping="Wrap"
+				   HorizontalAlignment="Center"/>
+		<Button HorizontalAlignment="Center"
+				Theme="{DynamicResource SolidButton}"
+				Margin="0 6 0 0"
+				Command="{Binding ProcessCommand}"
+				IsVisible="{Binding ShowRetry}"
+				Content="重试"/>
+	</StackPanel>
+</UserControl>

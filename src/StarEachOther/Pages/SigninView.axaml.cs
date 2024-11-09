@@ -15,7 +15,7 @@ public partial class SigninView : UserControl
     }
 }
 
-public partial class SigninViewModel : ViewModelBase
+public partial class SigninViewModel : ObservableObject
 {
     [ObservableProperty]
     string? message;

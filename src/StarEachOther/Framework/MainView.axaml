@@ -3,67 +3,77 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:StarEachOther.Framework"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"			 
+			xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:semi="https://irihi.tech/semi"
              xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
-			 xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              d:DesignHeight="450"
              d:DesignWidth="800"
              x:DataType="local:MainViewModel"
              mc:Ignorable="d">
-    <Design.DataContext>
-        <local:MainViewModel />
-    </Design.DataContext>
+	<Design.DataContext>
+		<local:MainViewModel />
+	</Design.DataContext>
 
-	<dialogHost:DialogHost CloseOnClickAway="False" Background="White" DialogMargin="0">
-		<dialogHost:DialogHost.DataTemplates>
-			<DataTemplate DataType="local:DialogViewModel">
-				<Grid RowDefinitions="* Auto" MinWidth="200" MaxWidth="400">
-					<ScrollViewer MinHeight="100" MaxHeight="500">
-						<TextBlock HorizontalAlignment="Center" 
-								   VerticalAlignment="Center" 
-								   Padding="12 6"
-								   Foreground="Black"
-								   TextWrapping="Wrap"
-								   Text="{Binding Message}"/>
-					</ScrollViewer>
-					<Grid Grid.Row="1" Background="#eee">
-						<Button Margin="6"
-								Classes="Small"
-								HorizontalAlignment="Right"
-								Theme="{DynamicResource SolidButton}"
-								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
-								Content="{Binding ButtonText}"/>
-					</Grid>
-				</Grid>
-			</DataTemplate>
-		</dialogHost:DialogHost.DataTemplates>
-		<Grid Background="White" TextElement.Foreground="Black">
-			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding !Success}" Margin="6">
-				<TextBlock Text="{Binding LoadingText}" 
-						   IsVisible="{Binding !Loading}"
-						   TextWrapping="Wrap"
-						   HorizontalAlignment="Center"/>
-				<Button HorizontalAlignment="Center"
-						Theme="{DynamicResource SolidButton}"
-						Margin="0 6 0 0"
-						Command="{Binding InitializeCommand}"
-						IsVisible="{Binding ShowRetry}"
-						Content="重试"/>
+	<Grid Background="White" TextElement.Foreground="Black">
+		<ContentControl Content="{Binding View}" />
+
+		<Grid Background="#8a000000" IsVisible="{Binding IsLoading}">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+				<progRing:ProgressRing Width="40"
+									   Height="40"
+									   Margin="0,0,0,6"
+									   Foreground="White"
+									   IsActive="True" />
+				<TextBlock Foreground="White" Text="{Binding LoadingText}" />
 			</StackPanel>
-
-			<ContentControl Content="{Binding View}" IsVisible="{Binding Success}" />
-
-			<Grid Background="#8a000000" IsVisible="{Binding Loading}">
-				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-					<progRing:ProgressRing Width="40"
-										   Height="40"
-										   Margin="0,0,0,6"
-										   Foreground="White"
-										   IsActive="True" />
-					<TextBlock Foreground="White" Text="{Binding LoadingText}" />
-				</StackPanel>
-			</Grid>
 		</Grid>
-	</dialogHost:DialogHost>
+
+		<Grid HorizontalAlignment="Right"
+			  VerticalAlignment="Top"
+			  IsVisible="{Binding ShowMessage}">
+			<ItemsControl ItemsSource="{Binding Messages}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Margin="6"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="local:MessageModel">
+						<StackPanel Margin="6" Width="200" Background="#eee">
+							<StackPanel.Effect>
+								<DropShadowEffect Color="#aaa" OffsetY="0" OffsetX="0"/>
+							</StackPanel.Effect>
+							<Grid>
+								<ScrollViewer HorizontalScrollBarVisibility="Disabled"
+											  VerticalScrollBarVisibility="Auto"
+											  Margin="6 24"
+											  MaxHeight="200">
+									<TextBlock Text="{Binding Message}"
+											   TextWrapping="Wrap"
+											   HorizontalAlignment="Center"
+											   VerticalAlignment="Center"/>
+								</ScrollViewer>
+								<Button HorizontalAlignment="Right"
+										VerticalAlignment="Top"
+										Command="{Binding CloseCommand}"
+										Theme="{DynamicResource BorderlessButton}"
+										Classes="Small Danger">
+									<materialIcons:MaterialIcon Kind="Close" />
+								</Button>
+							</Grid>
+							<StackPanel IsVisible="{Binding ShowButton}">
+								<Button Margin="6 0 6 6"
+										Command="{Binding ProcessCommand}"
+										HorizontalAlignment="Right"
+										Theme="{DynamicResource SolidButton}"
+										Classes="Small Primary"
+										Content="{Binding TaskButtonText}"/>
+							</StackPanel>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</Grid>
+	</Grid>
 </UserControl>

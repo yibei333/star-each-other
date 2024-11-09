@@ -20,18 +20,8 @@
 		<Grid IsVisible="{Binding !ShowRetry}" RowDefinitions="Auto * Auto">
 
 			<StackPanel Grid.Row="0" Margin="6,6,6,0" HorizontalAlignment="Center" Orientation="Horizontal">
-				<Button Classes="Small" 
-						HorizontalAlignment="Left" 
-						Theme="{DynamicResource SolidButton}" 
-						Command="{Binding RefreshCommand}" 
-						Margin="0 0 6 0">
-					<StackPanel Orientation="Horizontal">
-						<materialIcons:MaterialIcon Kind="Refresh" />
-						<TextBlock>刷新</TextBlock>
-					</StackPanel>
-				</Button>
 				<Button Classes="Tertiary Small"
-						Theme="{DynamicResource SolidButton}" 
+						Theme="{DynamicResource SolidButton}"
 						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=1}"
 						Command="{Binding SwitchWaitForStarViewCommand}">
 					<StackPanel Orientation="Horizontal">
@@ -39,9 +29,9 @@
 						<TextBlock>去Star</TextBlock>
 					</StackPanel>
 				</Button>
-				<Button Margin="6,0"
+				<Button Margin="6 0"
 						Classes="Tertiary Small"
-						Theme="{DynamicResource SolidButton}" 
+						Theme="{DynamicResource SolidButton}"
 						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=2}"
 						Command="{Binding SwitchStarredViewCommand}">
 					<StackPanel Orientation="Horizontal">
@@ -50,12 +40,22 @@
 					</StackPanel>
 				</Button>
 				<Button Classes="Tertiary Small"
-						Theme="{DynamicResource SolidButton}" 
+						Theme="{DynamicResource SolidButton}"
 						Classes.Success="{Binding Index, Converter={StaticResource ButtonActiveConverter}, ConverterParameter=3}"
 						Command="{Binding SwitchMyRepositoryViewCommand}">
 					<StackPanel Orientation="Horizontal">
 						<materialIcons:MaterialIcon Kind="SourceRepositories" />
 						<TextBlock>我的</TextBlock>
+					</StackPanel>
+				</Button>
+				<Button Classes="Small"
+						HorizontalAlignment="Left"
+						Theme="{DynamicResource SolidButton}"
+						Command="{Binding RefreshCommand}"
+						Margin="6 0">
+					<StackPanel Orientation="Horizontal">
+						<materialIcons:MaterialIcon Kind="Refresh" />
+						<TextBlock>刷新</TextBlock>
 					</StackPanel>
 				</Button>
 			</StackPanel>

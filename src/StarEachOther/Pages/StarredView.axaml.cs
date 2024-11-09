@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Octokit;
-using StarEachOther.Framework;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -16,18 +15,22 @@ public partial class StarredView : UserControl
     }
 }
 
-public partial class StarredViewModel : ViewModelBase
+public partial class StarredViewModel : ObservableObject
 {
     public StarredViewModel()
     {
-        var data = (from a in HomeView.AllRepoList join b in HomeView.StarredRepoList on a equals b.HtmlUrl select new StarredItemViewModel(b)).ToList();
+        var data = (from a in HomeView.StarredRepoList orderby a.HtmlUrl select new StarredItemViewModel(a)).ToList();
         Repo = new ObservableCollection<StarredItemViewModel>(data);
+        if (data.Count <= 0) ShowContent = true;
     }
+
+    [ObservableProperty]
+    bool showContent;
 
     public ObservableCollection<StarredItemViewModel> Repo { get; }
 }
 
-public partial class StarredItemViewModel : ViewModelBase
+public partial class StarredItemViewModel : ObservableObject
 {
     public StarredItemViewModel(Repository repository)
     {

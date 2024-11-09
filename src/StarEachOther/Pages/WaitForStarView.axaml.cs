@@ -20,7 +20,7 @@ public partial class WaitForStarView : UserControl
     }
 }
 
-public partial class WaitForStarViewModel : ViewModelBase
+public partial class WaitForStarViewModel : ObservableObject
 {
     public WaitForStarViewModel()
     {
@@ -41,7 +41,7 @@ public partial class WaitForStarViewModel : ViewModelBase
     public ObservableCollection<WaitForStarItemViewModel> Repo { get; }
 }
 
-public partial class WaitForStarItemViewModel : ViewModelBase
+public partial class WaitForStarItemViewModel : ObservableObject
 {
     public WaitForStarItemViewModel(string url, WaitForStarViewModel parent)
     {
@@ -60,7 +60,7 @@ public partial class WaitForStarItemViewModel : ViewModelBase
         var repoInfo = Url.GetUserAndRepoNameByUrl();
         if (!repoInfo.Item1)
         {
-            await App.Alert($"解析url({Url})失败,请联系开发者");
+            App.CurrentInstance.Alert($"解析url({Url})失败,请联系开发者");
             return;
         }
 

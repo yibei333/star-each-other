@@ -38,7 +38,8 @@
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>
-		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+		
+		<StackPanel IsVisible="{Binding ShowContent}" HorizontalAlignment="Center" VerticalAlignment="Center">
 			<materialIcons:MaterialIcon Kind="PlaylistCheck" Width="48" Height="48" Foreground="Green" VerticalAlignment="Center" />
 			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap">已经没有待点赞的项目了</TextBlock>
 			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap">快去邀请更多的小伙伴加入吧!!!</TextBlock>

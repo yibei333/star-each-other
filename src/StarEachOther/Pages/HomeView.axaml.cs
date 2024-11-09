@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using Avalonia.Interactivity;
-using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Octokit;
@@ -11,7 +10,6 @@ using StarEachOther.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,7 +33,6 @@ public partial class HomeView : UserControl
     {
         base.OnLoaded(e);
         _ = ViewModel.Refresh();
-        ViewModel.ChekcUpdate();
     }
 
     public static async Task<bool> SetRepo()
@@ -57,7 +54,7 @@ public partial class HomeView : UserControl
         var text = await HttpExtension.GetText(Config.RepoListUrl);
         if (!text.Success)
         {
-            await App.Alert(text.Data);
+            App.CurrentInstance.Alert(text.Data);
             return false;
         }
         AllRepoList = text.Data.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Distinct().ToList();
@@ -83,7 +80,7 @@ public partial class HomeView : UserControl
     }
 }
 
-public partial class HomeViewModel : ViewModelBase
+public partial class HomeViewModel : ObservableObject
 {
     [ObservableProperty]
     object? view;
@@ -137,31 +134,6 @@ public partial class HomeViewModel : ViewModelBase
         {
             ShowRetry = true;
             App.CurrentInstance.MainView.SetLoadingState(false, null);
-        }
-    }
-
-    public async void ChekcUpdate()
-    {
-        try
-        {
-            var remoteVersion = await HttpExtension.GetText(Config.VersionUrl);
-            if (remoteVersion.Success && remoteVersion.Data.NotNullOrWhiteSpace())
-            {
-                var assembly = this.GetType().Assembly;
-                var uri = new Uri($"avares://{assembly.GetName().Name}/Assets/version.txt");
-                using var stream = AssetLoader.Open(uri);
-                using var memoryStream = new MemoryStream();
-                stream.CopyTo(memoryStream);
-                var currentVersion = memoryStream.ToArray().Utf8Encode().Trim();
-                if (currentVersion.NotNullOrWhiteSpace() && currentVersion != remoteVersion.Data)
-                {
-                    await App.Alert($"发现新版本:{remoteVersion.Data}", "去下载");
-                    await App.CurrentInstance.Launcher.LaunchUriAsync(new Uri(Config.ReleaseUrl));
-                }
-            }
-        }
-        catch
-        {
         }
     }
 }

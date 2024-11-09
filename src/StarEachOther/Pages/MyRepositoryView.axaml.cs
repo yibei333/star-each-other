@@ -19,26 +19,29 @@ public partial class MyRepositoryView : UserControl
     }
 }
 
-public partial class MyRepositoryViewModel : ViewModelBase
+public partial class MyRepositoryViewModel : ObservableObject
 {
     public MyRepositoryViewModel()
     {
-        var data = (from a in HomeView.AllRepoList join b in HomeView.MyRepoList on a equals b.HtmlUrl select new MyRepositoryItemViewModel(b)).ToList();
+        var data =
+        (
+            from a in HomeView.MyRepoList
+            join b in HomeView.AllRepoList on a.HtmlUrl equals b into bb
+            from b in bb.DefaultIfEmpty()
+            orderby b is null
+            select new MyRepositoryItemViewModel(a) { WaitAdd = b is null }
+        ).ToList();
         Repo = new ObservableCollection<MyRepositoryItemViewModel>(data);
+        if (data.Count <= 0) ShowContent = true;
     }
+
+    [ObservableProperty]
+    bool showContent;
 
     public ObservableCollection<MyRepositoryItemViewModel> Repo { get; }
-
-    [RelayCommand]
-#pragma warning disable CA1822 // Mark members as static
-    public async Task New()
-#pragma warning restore CA1822 // Mark members as static
-    {
-        await App.CurrentInstance.Launcher.LaunchUriAsync(new System.Uri(Config.NewRepoUrl));
-    }
 }
 
-public partial class MyRepositoryItemViewModel : ViewModelBase
+public partial class MyRepositoryItemViewModel : ObservableObject
 {
     public MyRepositoryItemViewModel(Repository repository)
     {
@@ -51,4 +54,21 @@ public partial class MyRepositoryItemViewModel : ViewModelBase
 
     [ObservableProperty]
     int starCount;
+
+    [ObservableProperty]
+    bool waitAdd;
+
+    [RelayCommand]
+    public async Task Add()
+    {
+        var url = string.Format(Config.NewIssueUrl, "¼ÓÈë", Url);
+        await App.CurrentInstance.Launcher.LaunchUriAsync(new System.Uri(url));
+    }
+
+    [RelayCommand]
+    public async Task Remove()
+    {
+        var url = string.Format(Config.NewIssueUrl, "ÍË³ö", Url);
+        await App.CurrentInstance.Launcher.LaunchUriAsync(new System.Uri(url));
+    }
 }

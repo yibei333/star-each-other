@@ -10,16 +10,7 @@
 	<Design.DataContext>
 		<local:MyRepositoryViewModel></local:MyRepositoryViewModel>
 	</Design.DataContext>
-	<StackPanel>
-		<Button HorizontalAlignment="Stretch"
-				Margin="0 0 0 6"
-				Theme="{DynamicResource SolidButton}"
-				Command="{Binding NewCommand}">
-			<StackPanel Orientation="Horizontal">
-				<materialIcons:MaterialIcon Kind="Add" VerticalAlignment="Center" />
-				<TextBlock VerticalAlignment="Center" Margin="2 0 0 0">添加我的仓库</TextBlock>
-			</StackPanel>
-		</Button>
+	<Grid>
 		<ItemsControl ItemsSource="{Binding Repo}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
@@ -29,10 +20,10 @@
 			<ItemsControl.ItemTemplate>
 				<DataTemplate DataType="local:MyRepositoryItemViewModel">
 					<Border Margin="0 0 0 6" BorderThickness="1" BorderBrush="#ddd" CornerRadius="6">
-						<Grid ColumnDefinitions="Auto *">
+						<Grid ColumnDefinitions="Auto * Auto">
 							<StackPanel Orientation="Horizontal" Margin="6 0 0 0">
 								<materialIcons:MaterialIcon Kind="Star" Foreground="#f3d200" VerticalAlignment="Center" />
-								<TextBlock Text="{Binding StarCount}" VerticalAlignment="Center"/>
+								<TextBlock Text="{Binding StarCount}" MinWidth="50" VerticalAlignment="Center"/>
 							</StackPanel>
 							<HyperlinkButton Grid.Column="1" 
 											 VerticalAlignment="Center"
@@ -42,10 +33,36 @@
 									<TextBlock Text="{Binding Url}" Padding="6 0" TextWrapping="Wrap"/>
 								</HyperlinkButton.Content>
 							</HyperlinkButton>
+							<Button Grid.Column="2" 
+									IsVisible="{Binding WaitAdd}"
+									Command="{Binding AddCommand}"
+									Theme="{DynamicResource SolidButton}"
+									Classes="Small Success">
+								<StackPanel Orientation="Horizontal">
+									<materialIcons:MaterialIcon Kind="Add" VerticalAlignment="Center" />
+									<TextBlock VerticalAlignment="Center" Margin="2 0 0 0">加入</TextBlock>
+								</StackPanel>
+							</Button>
+							<Button Grid.Column="2"
+									IsVisible="{Binding !WaitAdd}"
+									Command="{Binding RemoveCommand}"
+									Theme="{DynamicResource SolidButton}"
+									Classes="Small Danger">
+								<StackPanel Orientation="Horizontal">
+									<materialIcons:MaterialIcon Kind="Remove" VerticalAlignment="Center" />
+									<TextBlock VerticalAlignment="Center" Margin="2 0 0 0">退出</TextBlock>
+								</StackPanel>
+							</Button>
 						</Grid>
 					</Border>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>
-	</StackPanel>
+		
+		<StackPanel IsVisible="{Binding ShowContent}" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<materialIcons:MaterialIcon Kind="PlaylistCheck" Width="48" Height="48" Foreground="Green" VerticalAlignment="Center" />
+			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap">你还没任何公开的开源项目</TextBlock>
+			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap">快去开源吧!!!</TextBlock>
+		</StackPanel>
+	</Grid>
 </UserControl>

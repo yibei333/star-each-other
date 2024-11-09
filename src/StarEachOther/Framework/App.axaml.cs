@@ -4,7 +4,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
-using DialogHostAvalonia;
 using StarEachOther.Core;
 using StarEachOther.Pages;
 using System;
@@ -59,7 +58,8 @@ public partial class App : Application
 
     async Task OnRequestException(Exception e)
     {
-        await Alert(e.Message);
+        Alert(e.Message);
+        await Task.CompletedTask;
         //MainView.Refresh();
     }
 
@@ -76,10 +76,9 @@ public partial class App : Application
         await Task.CompletedTask;
     }
 
-    public static async Task Alert(string message, string? buttonText = "¹Ø±Õ")
+    public void Alert(string message, string? buttonText = null, Task? task = null)
     {
-        if (DialogHost.IsDialogOpen(null)) return;
-        await DialogHost.Show(new DialogViewModel { Message = message, ButtonText = buttonText });
+        MainView.ViewModel.AddMessage(message, buttonText, task);
     }
 }
 

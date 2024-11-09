@@ -11,6 +11,6 @@ public class Config
     public const string SupportAutherUrl = "https://github.com/yibei333/star-each-other/blob/main/assets/buymeacoffee.md";
     public const string RepoListUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/list.txt";
     public const string NewIssueUrl = "https://github.com/yibei333/star-each-other/issues/new?title={0}&body={1}";
-    public const string VersionUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/src/StarEachOther/Assets/version.txt";
+    public const string VersionUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/version.txt";
     public const string ReleaseUrl = "https://github.com/yibei333/star-each-other/releases";
 }

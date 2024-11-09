@@ -1,2 +1,0 @@
-# some info
-## child info

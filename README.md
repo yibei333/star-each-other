@@ -14,8 +14,3 @@
 # 交流
 * QQ交流群:471994597
 * 鼓励使用者通过提交issue的方式交流
-
-# 支持作者
-<img style="width:200px" src="https://gitee.com/yibei333/images/raw/main/data/wechat.jpg">
-
-<img style="width:200px" src="https://gitee.com/yibei333/images/raw/main/data/alipay.jpg">

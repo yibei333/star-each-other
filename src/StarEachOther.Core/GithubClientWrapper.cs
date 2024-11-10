@@ -28,6 +28,8 @@ public class GithubClientWrapper
 
     public bool IsAuthenticated { get; private set; }
 
+    public bool ShowSupport { get; private set; }
+
     public async Task<bool> Request(Func<GitHubClient, Task> request)
     {
         try
@@ -56,6 +58,9 @@ public class GithubClientWrapper
     {
         try
         {
+            var supportResponse = await HttpExtension.GetText(Config.GithubShowSupportUrl);
+            if (supportResponse.Success && supportResponse.Data == "1") ShowSupport = true;
+
             var secret = ResourceExtension.GetText("Secret.txt").Trim();
             var remoteRepsonse = await HttpExtension.GetText(Config.GithubSecretUrl);
             if (!remoteRepsonse.Success) throw new Exception(remoteRepsonse.Data);

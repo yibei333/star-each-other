@@ -8,6 +8,7 @@ public class Config
     public const string SigninCallbackEndpoint = "/SignInCallback";
     public const string GithubOAuthAppName = "StarGithub";
     public const string GithubSecretUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/secret.txt";
+    public const string GithubShowSupportUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/show-support-author.txt";
     public const string SupportAutherUrl = "https://github.com/yibei333/star-each-other/blob/main/assets/buymeacoffee.md";
     public const string RepoListUrl = "https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/list.txt";
     public const string NewIssueUrl = "https://github.com/yibei333/star-each-other/issues/new?title={0}&body={1}";

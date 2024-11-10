@@ -89,6 +89,9 @@ public partial class HomeViewModel : ObservableObject
     bool showRetry;
 
     [ObservableProperty]
+    bool showSupport = App.CurrentInstance.Client.ShowSupport;
+
+    [ObservableProperty]
     int index = 1;
 
     [ObservableProperty]

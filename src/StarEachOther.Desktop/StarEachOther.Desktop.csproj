@@ -8,7 +8,7 @@
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 		<AssemblyName>GithubStarEachOther</AssemblyName>
 		<ApplicationIcon>github.ico</ApplicationIcon>
-		<AssemblyVersion>1.0.1</AssemblyVersion>
+		<AssemblyVersion>1.0.2</AssemblyVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>

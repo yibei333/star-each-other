@@ -75,6 +75,7 @@
 							 HorizontalAlignment="Center"
 							 VerticalAlignment="Center"
 							 Foreground="BlueViolet"
+							 IsVisible="{Binding ShowSupport}"
 							 NavigateUri="{Binding SupportAutherUrl}">
 				<HyperlinkButton.Content>
 					<StackPanel Orientation="Horizontal">

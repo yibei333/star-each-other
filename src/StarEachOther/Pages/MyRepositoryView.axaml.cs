@@ -61,14 +61,14 @@ public partial class MyRepositoryItemViewModel : ObservableObject
     [RelayCommand]
     public async Task Add()
     {
-        var url = string.Format(Config.NewIssueUrl, "¼ÓÈë", Url);
+        var url = string.Format(Config.NewIssueUrl, "åŠ å…¥", Url);
         await App.CurrentInstance.Launcher.LaunchUriAsync(new System.Uri(url));
     }
 
     [RelayCommand]
     public async Task Remove()
     {
-        var url = string.Format(Config.NewIssueUrl, "ÍË³ö", Url);
+        var url = string.Format(Config.NewIssueUrl, "é€€å‡º", Url);
         await App.CurrentInstance.Launcher.LaunchUriAsync(new System.Uri(url));
     }
 }

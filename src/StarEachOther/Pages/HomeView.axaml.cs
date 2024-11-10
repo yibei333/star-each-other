@@ -57,7 +57,7 @@ public partial class HomeView : UserControl
             App.CurrentInstance.Alert(text.Data);
             return false;
         }
-        AllRepoList = text.Data.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Distinct().ToList();
+        AllRepoList = text.Data.Split(["\r", "\n", "\r\n"], StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Distinct().ToList();
         return true;
     }
 

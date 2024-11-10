@@ -1,0 +1,24 @@
+name: schedule-max-star-handle
+
+on:
+  schedule:
+    - cron: "30 11,23 * * *"
+      
+jobs:
+  process:
+    permissions: write-all
+    runs-on: windows-latest 
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: process
+      run: |
+        git config --global user.name $env:GITHUB_REPOSITORY_OWNER
+        git config --global user.email ${{ secrets.EMAIL }}
+        build/star-manage.exe -t ${{ secrets.API_TOKEN }} -m 3 -u $env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY -r $env:GITHUB_WORKSPACE

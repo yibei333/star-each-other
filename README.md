@@ -1,6 +1,10 @@
 # 截图
 <img src="https://raw.githubusercontent.com/yibei333/star-each-other/refs/heads/main/assets/screenshot.png">
 
+# 说明
++ 没有服务端,直接调用Github的API,也就不会收集你的个人信息,代码开源,请放心使用
++ 加入项目可能会有几分钟延迟
+
 # 下载
 
 * [android](https://github.com/yibei333/star-each-other/releases/latest/download/GithubStarEachOther_android.apk)
